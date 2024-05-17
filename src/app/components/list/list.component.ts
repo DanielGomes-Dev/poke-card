@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IgxFilterOptions, IgxListItemComponent, IgxInputGroupComponent, IgxPrefixDirective, IgxIconComponent, IgxInputDirective, IgxSuffixDirective, IgxListComponent, IgxAvatarComponent, IgxFilterPipe, } from 'igniteui-angular';
 import { NgIf, NgFor, NgClass } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { CardService } from '../../services/card.service';
+import { CardService } from '../../services/card/card.service';
 import { Card } from 'pokemon-tcg-sdk-typescript/dist/sdk';
 
 interface Contact {

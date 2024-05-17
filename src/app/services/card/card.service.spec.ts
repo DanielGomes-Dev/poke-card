@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 import { CardService } from './card.service';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
-import { lastValueFrom } from 'rxjs';
 
 describe('CardService', () => {
   let service: CardService;
