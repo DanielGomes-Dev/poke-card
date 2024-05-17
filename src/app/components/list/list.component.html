@@ -1,0 +1,43 @@
+<p>igx-list component with filtering.</p>
+<p>You can read more about configuring the igx-list component in the
+    <a href="https://github.com/IgniteUI/igniteui-angular/blob/master/projects/igniteui-angular/src/lib/list/README.md" target="_blank">README</a> or the
+    <a href="https://www.infragistics.com/products/ignite-ui-angular/angular/components/list" target="_blank">official
+    documentation</a>.
+</p>
+<igx-input-group type="search" class="search">
+    <igx-prefix>
+        <igx-icon>search</igx-icon>
+    </igx-prefix>
+    <input #search igxInput placeholder="Search Cards" [(ngModel)]="searchCard">
+    <igx-suffix *ngIf="search.value.length > 0" (click)="searchCard = ''">
+        <igx-icon>clear</igx-icon>
+    </igx-suffix>
+</igx-input-group>
+<igx-list *ngIf="cards">
+    <igx-list-item [isHeader]="true"> Cards </igx-list-item>
+    <igx-list-item #item *ngFor="let card of cards | igxFilter: filterCards;">
+        <div class="item-container">
+            <div class="card">
+                <igx-avatar size="large" [src]="card.images.small" [shape]="'square'"></igx-avatar>
+                <div class="card__info">
+                    <span class="name">Nome: {{ card.name }}</span>
+                    <span class="phone">Tipo de Card: {{ card.supertype }}</span>
+                </div>
+                <div class="card__info">
+                    <span class="name">
+                      Tipo do Pokemon: 
+                      <span *ngFor="let type of card.types" class="name">
+                        {{type}}
+                      </span>
+                    </span>
+                </div>
+                <div class="card__info">
+                    <span class="name">Raridade: {{ card.rarity }}</span>
+                    <span class="phone">Numero da Pokedex: {{ card.nationalPokedexNumbers }}</span>
+                </div>
+            </div>
+            <igx-icon class="icon" [ngClass]="{ 'icon--favorite': card.isFavorite }" (click)="toggleFavorite(item)">star
+            </igx-icon>
+        </div>
+    </igx-list-item>
+</igx-list>
