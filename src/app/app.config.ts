@@ -10,6 +10,7 @@ import {
 } from 'igniteui-angular';
 
 import { routes } from './app.routes';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,9 +21,13 @@ export const appConfig: ApplicationConfig = {
       IgxLayoutModule,
       IgxNavbarModule,
       IgxNavigationDrawerModule,
-      IgxRippleModule
+      IgxRippleModule,
+      
     ),
-    provideAnimations()
+    provideAnimations(),
+    provideHttpClient()
+
+
     // provide the HAMMER_GESTURE_CONFIG token
     // to override the default settings of the HammerModule
     // { provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig }

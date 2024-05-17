@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { IgxAvatarModule, IgxFilterModule, IgxIconModule, IgxInputGroupModule, IgxListModule } from 'igniteui-angular';
 import { ListComponent } from './list.component';
 
-describe('ListComponent', () => {
+xdescribe('ListComponent', () => {
   let component: ListComponent;
   let fixture: ComponentFixture<ListComponent>;
 

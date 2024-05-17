@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IgxFilterOptions, IgxListItemComponent, IgxInputGroupComponent, IgxPrefixDirective, IgxIconComponent, IgxInputDirective, IgxSuffixDirective, IgxListComponent, IgxAvatarComponent, IgxFilterPipe, } from 'igniteui-angular';
 import { NgIf, NgFor, NgClass } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { CardService } from '../../services/card.service';
+import { Card } from 'pokemon-tcg-sdk-typescript/dist/sdk';
 
 interface Contact {
   isFavorite: boolean;
@@ -32,7 +34,16 @@ interface Contact {
     FormsModule
   ]
 })
-export class ListComponent {
+export class ListComponent implements OnInit {
+  private cards: Card[] = [];
+
+  constructor(private cardService: CardService) {
+  }
+  
+  async ngOnInit(){
+    this.cards = await this.cardService.getAll()
+    console.log(this.cards);
+  }
   public title = 'list';
   public searchContact = '';
   public contacts: Contact[] = [
