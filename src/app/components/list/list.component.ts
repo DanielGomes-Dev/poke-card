@@ -35,59 +35,27 @@ interface Contact {
   ]
 })
 export class ListComponent implements OnInit {
-  private cards: Card[] = [];
+   cards: Card[] = [];
 
   constructor(private cardService: CardService) {
   }
-  
+
   async ngOnInit(){
     this.cards = await this.cardService.getAll()
     console.log(this.cards);
   }
   public title = 'list';
-  public searchContact = '';
-  public contacts: Contact[] = [
-    {
-      isFavorite: false,
-      name: 'Terrance Orta',
-      phone: '770-504-2217',
-      photo: 'https://randomuser.me/api/portraits/men/27.jpg'
-    },
-    {
-      isFavorite: true,
-      name: 'Richard Mahoney',
-      phone: '423-676-2869',
-      photo: 'https://randomuser.me/api/portraits/men/1.jpg'
-    },
-    {
-      isFavorite: false,
-      name: 'Donna Price',
-      phone: '859-496-2817',
-      photo: 'https://randomuser.me/api/portraits/women/50.jpg'
-    },
-    {
-      isFavorite: false,
-      name: 'Lisa Landers',
-      phone: '901-747-3428',
-      photo: 'https://randomuser.me/api/portraits/women/3.jpg'
-    },
-    {
-      isFavorite: true,
-      name: 'Dorothy H. Spencer',
-      phone: '573-394-9254',
-      photo: 'https://randomuser.me/api/portraits/women/67.jpg'
-    }
-  ];
+  public searchCard = '';
 
-  public get filterContacts(): IgxFilterOptions {
+  public get filterCards(): IgxFilterOptions {
     const fo = new IgxFilterOptions();
     fo.key = 'name';
-    fo.inputValue = this.searchContact;
+    fo.inputValue = this.searchCard;
     return fo;
   }
 
   public toggleFavorite(item: IgxListItemComponent): void {
-    const contact = this.contacts[item.index - 1];
-    contact.isFavorite = !contact.isFavorite;
+    // const contact = this.contacts[item.index - 1];
+    // contact.isFavorite = !contact.isFavorite;
   }
 }

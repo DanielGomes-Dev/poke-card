@@ -8,7 +8,7 @@ import { lastValueFrom } from 'rxjs';
 })
 export class CardService {
 
-  private url = 'https://api.pokemontcg.io/v2/cards/'
+  private url = 'https://api.pokemontcg.io/v2/cards?page=1&pageSize=10'
 
   constructor(private httpClient: HttpClient) { }
 

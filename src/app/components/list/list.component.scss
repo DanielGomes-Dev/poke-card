@@ -1,42 +1,43 @@
 igx-icon {
-  cursor: pointer;
-  user-select: none;
+    cursor: pointer;
+    user-select: none;
 }
 
 .search {
-  margin-bottom: 8px;
+    margin-bottom: 8px;
 }
 
 .item-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    min-height: 90px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .icon {
-  color: lightgray;
+    color: lightgray;
 }
 
 .icon.icon--favorite {
-  color: orange;
+    color: orange;
 }
 
-.contact {
-  display: flex;
-  flex: 1 0 240px;
-  align-items: center;
+.card {
+    display: flex;
+    flex: 1 0 240px;
+    align-items: center;
 }
 
-.contact__info {
-  display: flex;
-  flex-flow: column nowrap;
-  margin-left: 24px;
+.card__info {
+    display: flex;
+    flex-flow: column nowrap;
+    margin-left: 24px;
 }
 
 .name {
-  font-weight: 600;
+    font-weight: 600;
 }
 
 .phone {
-  font-size: 0.875em;
+    font-size: 0.875em;
 }
