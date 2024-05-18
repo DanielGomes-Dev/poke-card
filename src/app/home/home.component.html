@@ -1,9 +1,12 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <h1>Veja seus decks</h1>
-
-
 <div *ngFor="let deck of decks">
     <span>id: {{deck.id}} name: {{deck.name}}</span>
+</div>
+
+<h1>Veja seus cards</h1>
+<div *ngFor="let card of cards">
+    <span>id: {{card.id}} name: {{card.image}}</span>
 </div>
 
 <div>
@@ -26,10 +29,10 @@
     <button class="bg-gray-400 p-4 text-orange-700 rounded-sm mr-4" (click)="insertCardsInDeck()">insertCardsInDeck</button>
 
 
-    <!-- <button class="bg-gray-400 p-4 text-orange-700 rounded-sm mr-4" (click)="updateDeck()">Edit Deck</button>
+    <button class="bg-gray-400 p-4 text-orange-700 rounded-sm mr-4" (click)="removeCardsInDeck()">removeCardsInDeck</button>
 
 
-    <button class="bg-red-400 p-4 text-white rounded-sm mr-4" (click)="deleteDeck()">Delete Deck</button> -->
+    <!-- <button class="bg-red-400 p-4 text-white rounded-sm mr-4" (click)="deleteDeck()">Delete Deck</button> -->
 
 
 </div>

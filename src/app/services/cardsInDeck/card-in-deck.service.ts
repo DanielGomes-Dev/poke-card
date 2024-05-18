@@ -10,13 +10,19 @@ export class CardInDeckService {
 
   async getAllCardInDeck(deckId: string){
     const deckRef = await this.firestore.getDocRefById(deckId, 'decks');
-    const cards = await this.firestore.getCollection('cards', deckRef);
+    const cards = await this.firestore.getCollection<any>('cards', deckRef);
     return cards
   }
 
   async insertCardsInDeck(deckId: string, values: any){
     const deckRef = await this.firestore.getDocRefById(deckId, 'decks');
     const cards = await this.firestore.insertCollection(values, 'cards', deckRef);
+    return cards
+  }
+
+  async removeCardsInDeck(deckId: string, cardId: any){
+    const deckRef = await this.firestore.getDocRefById(deckId, 'decks');
+    const cards = await this.firestore.deleteDocument(cardId, 'cards', deckRef);
     return cards
   }
 } 

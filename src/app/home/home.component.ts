@@ -15,6 +15,7 @@ import { CardInDeckService } from '../services/cardsInDeck/card-in-deck.service'
 export class HomeComponent implements OnInit {
   title = 'Welcome to Ignite UI for Angular!';
   decks: Deck[] = [];
+  cards: any[] = []
   constructor(
     private deckService: DeckService,
     private cardInDeckService: CardInDeckService
@@ -39,21 +40,21 @@ export class HomeComponent implements OnInit {
       name: 'novo deck criado'
     }
     const response = await this.deckService.createDeck(deck)
-    this.getAllDeck()
+    await this.getAllDeck()
 
     console.log(response);
   }
 
   async updateDeck(){
     const response = await this.deckService.updateDeck({name: 'deckEditado' + new Date()}, this.decks[0].id)
-    this.getAllDeck()
+    await this.getAllDeck()
 
     console.log(response);
   }
 
   async deleteDeck(){
     const response = await this.deckService.deleteDeck(this.decks[0].id)
-    this.getAllDeck()
+    await this.getAllDeck()
 
     console.log(response);
   }
@@ -61,17 +62,24 @@ export class HomeComponent implements OnInit {
   async getAllCardInDeck(){
     const response = await this.cardInDeckService.getAllCardInDeck(this.decks[0].id);
     console.log(response);
+    this.cards = response;
   }
 
   async insertCardsInDeck(){
     const card = {
-      id: 'cardId',
-      imgage: 'cardImage'
+      cardId: 'cardId',
+      image: 'cardImage'
     }
     const response = await this.cardInDeckService.insertCardsInDeck(this.decks[0].id, card);
     console.log(response);
+    await this.getAllCardInDeck();
 
   }
 
+  async removeCardsInDeck(){
+    await this.cardInDeckService.removeCardsInDeck(this.decks[0].id, this.cards[0].id)
+    await this.getAllCardInDeck();
+  
+  }
   
 }

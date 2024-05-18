@@ -20,6 +20,7 @@ import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, setDoc } fro
         for (const item of snapshot.docs) {
             response.push({id: item.id, ...item.data()})
         }
+        
         return response;
     }
 
@@ -53,8 +54,8 @@ import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, setDoc } fro
       }
     }
 
-    async deleteDocument(docId: string, collectionName: string){
-      const docRef = doc(this.firestore, collectionName, docId);
+    async deleteDocument(docId: string, collectionName: string, deckRef?: any){
+      const docRef = doc(deckRef || this.firestore, collectionName, docId);
       console.log(docRef);
       try {
         await deleteDoc(docRef);
