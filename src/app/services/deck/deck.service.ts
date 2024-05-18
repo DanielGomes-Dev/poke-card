@@ -20,6 +20,10 @@ export class DeckService {
     return this.firestore.getCollection<Deck[]>('decks');
   }
 
+  getDeckById(docId:string){
+    return this.firestore.getDocRefById<Deck>(docId, 'decks');
+  }
+
   createDeck(values: createDeck){
     return this.firestore.insertCollection(values, 'decks');
   }
