@@ -12,6 +12,11 @@ export class CardInDeckService {
     const deckRef = await this.firestore.getDocRefById(deckId, 'decks');
     const cards = await this.firestore.getCollection('cards', deckRef);
     return cards
+  }
 
+  async insertCardsInDeck(deckId: string, values: any){
+    const deckRef = await this.firestore.getDocRefById(deckId, 'decks');
+    const cards = await this.firestore.insertCollection(values, 'cards', deckRef);
+    return cards
   }
 } 
