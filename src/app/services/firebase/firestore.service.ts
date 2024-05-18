@@ -13,8 +13,8 @@ import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, setDoc } fro
         
     }
 
-    async getCollection<T>(collectionName: string):Promise<T>{
-        const col = collection(this.firestore, collectionName);
+    async getCollection<T>(collectionName: string, docRef?: any):Promise<T>{
+        const col = collection(docRef || this.firestore, collectionName);
         const snapshot = await getDocs(col);
         const response: any = [];;
         for (const item of snapshot.docs) {
@@ -22,6 +22,11 @@ import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, setDoc } fro
         }
         return response;
     }
+
+    async getDocRefById<T>(docId: string, collectionName: string){
+      const docRef = doc(this.firestore, collectionName, docId);
+      return docRef;
+  }
 
     async insertCollection(values: any, collectionName: string){
       const col = collection(this.firestore, collectionName);
@@ -35,7 +40,7 @@ import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, setDoc } fro
       }
       
     }
-
+    
     async updateDocument(docId: string, updateData: any, collectionName: string){
       const docRef = doc(this.firestore, collectionName, docId);
       try {

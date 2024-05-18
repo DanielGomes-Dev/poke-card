@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { createDeck, Deck, DeckService } from '../services/deck/deck.service';
 import { NgFor } from '@angular/common';
+import { CardInDeckService } from '../services/cardsInDeck/card-in-deck.service';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,10 @@ import { NgFor } from '@angular/common';
 export class HomeComponent implements OnInit {
   title = 'Welcome to Ignite UI for Angular!';
   decks: Deck[] = [];
-  constructor(private deckService: DeckService) { }
+  constructor(
+    private deckService: DeckService,
+    private cardInDeckService: CardInDeckService
+  ) { }
 
   ngOnInit(): void {
     this.getAllDeck()
@@ -23,6 +27,11 @@ export class HomeComponent implements OnInit {
   async getAllDeck(){
     this.decks = await this.deckService.getAllDeck();
   }
+
+  // async getDeckById(){
+  //   const deck = await this.deckService.getDeckById(this.decks[0].id);
+  //   console.log(deck);
+  // }
 
   async createNewDeck(){
     console.log('ok')
@@ -46,6 +55,11 @@ export class HomeComponent implements OnInit {
     const response = await this.deckService.deleteDeck(this.decks[0].id)
     this.getAllDeck()
 
+    console.log(response);
+  }
+
+  async getAllCardInDeck(){
+    const response = await this.cardInDeckService.getAllCardInDeck(this.decks[0].id);
     console.log(response);
   }
 
