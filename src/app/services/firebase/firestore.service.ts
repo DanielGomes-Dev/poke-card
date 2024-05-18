@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { FirebaseService } from "./firebase.service";
-import { addDoc, collection, getDocs, getFirestore } from "firebase/firestore";
+import { addDoc, collection, doc, getDocs, getFirestore, setDoc } from "firebase/firestore";
 
 @Injectable({
     providedIn: 'root'
@@ -18,7 +18,7 @@ import { addDoc, collection, getDocs, getFirestore } from "firebase/firestore";
         const snapshot = await getDocs(col);
         const response = [];;
         for (const item of snapshot.docs) {
-            response.push(item.data())
+            response.push({id: item.id, ...item.data()})
         }
         return response;
     }
@@ -35,4 +35,18 @@ import { addDoc, collection, getDocs, getFirestore } from "firebase/firestore";
       }
       
     }
+
+    async updateDocument(docId: string, updateData: any, collectionName: string){
+      const docRef = doc(this.firestore, collectionName, docId);
+      try {
+        await setDoc(docRef, updateData, { merge: true });
+        console.log("Documento atualizado com sucesso");
+        return true;
+      } catch (e) {
+        console.error("Erro ao atualizar documento: ", e);
+        return false;
+      }
+    }
+
+
   }

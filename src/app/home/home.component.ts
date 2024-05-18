@@ -32,4 +32,14 @@ export class HomeComponent implements OnInit {
     const response = await this.deckService.createDeck(deck)
     console.log(response);
   }
+
+  async updateDeck(){
+    console.log('ok')
+    const deck: Deck = {
+      name: 'novo deck criado'
+    }
+    console.log(this.decks);
+    const response = await this.deckService.updateDeck({name: 'deckEditado' + new Date()}, this.decks[0].id)
+    // console.log(response);
+  }
 }
