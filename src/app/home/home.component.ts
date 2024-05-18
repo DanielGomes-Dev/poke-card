@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Deck, DeckService } from '../services/deck/deck.service';
+import { createDeck, Deck, DeckService } from '../services/deck/deck.service';
 import { NgFor } from '@angular/common';
 
 @Component({
@@ -13,7 +13,7 @@ import { NgFor } from '@angular/common';
 })
 export class HomeComponent implements OnInit {
   title = 'Welcome to Ignite UI for Angular!';
-  decks: any[] = [];
+  decks: Deck[] = [];
   constructor(private deckService: DeckService) { }
 
   ngOnInit(): void {
@@ -26,20 +26,28 @@ export class HomeComponent implements OnInit {
 
   async createNewDeck(){
     console.log('ok')
-    const deck: Deck = {
+    const deck: createDeck = {
       name: 'novo deck criado'
     }
     const response = await this.deckService.createDeck(deck)
+    this.getAllDeck()
+
     console.log(response);
   }
 
   async updateDeck(){
-    console.log('ok')
-    const deck: Deck = {
-      name: 'novo deck criado'
-    }
-    console.log(this.decks);
     const response = await this.deckService.updateDeck({name: 'deckEditado' + new Date()}, this.decks[0].id)
-    // console.log(response);
+    this.getAllDeck()
+
+    console.log(response);
   }
+
+  async deleteDeck(){
+    const response = await this.deckService.deleteDeck(this.decks[0].id)
+    this.getAllDeck()
+
+    console.log(response);
+  }
+
+  
 }
