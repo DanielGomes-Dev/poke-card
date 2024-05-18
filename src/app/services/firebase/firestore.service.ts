@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { FirebaseService } from "./firebase.service";
-import { addDoc, collection, doc, getDocs, getFirestore, setDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, setDoc } from "firebase/firestore";
 
 @Injectable({
     providedIn: 'root'
@@ -13,10 +13,10 @@ import { addDoc, collection, doc, getDocs, getFirestore, setDoc } from "firebase
         
     }
 
-    async getCollection(collectionName: string){
+    async getCollection<T>(collectionName: string):Promise<T>{
         const col = collection(this.firestore, collectionName);
         const snapshot = await getDocs(col);
-        const response = [];;
+        const response: any = [];;
         for (const item of snapshot.docs) {
             response.push({id: item.id, ...item.data()})
         }
@@ -28,7 +28,7 @@ import { addDoc, collection, doc, getDocs, getFirestore, setDoc } from "firebase
       try {
         const docRef = await addDoc(col, values);
         console.log("Documento adicionado com ID: ", docRef.id);
-        return docRef.id;
+        return docRef.id as string;
 
       } catch (error) {
         return error
@@ -44,6 +44,19 @@ import { addDoc, collection, doc, getDocs, getFirestore, setDoc } from "firebase
         return true;
       } catch (e) {
         console.error("Erro ao atualizar documento: ", e);
+        return false;
+      }
+    }
+
+    async deleteDocument(docId: string, collectionName: string){
+      const docRef = doc(this.firestore, collectionName, docId);
+      console.log(docRef);
+      try {
+        await deleteDoc(docRef);
+        console.log("Documento excluído com sucesso");
+        return true;
+      } catch (e) {
+        console.error("Erro ao excluir documento: ", e);
         return false;
       }
     }
