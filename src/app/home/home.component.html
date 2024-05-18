@@ -5,3 +5,7 @@
 <div *ngFor="let deck of decks">
     <span>id: {{deck.id}} name: {{deck.name}}</span>
 </div>
+
+<div>
+    <button class="bg-slate-600 p-4 text-cyan-50 rounded-sm" (click)="createNewDeck()">Create new Deck</button>
+</div>

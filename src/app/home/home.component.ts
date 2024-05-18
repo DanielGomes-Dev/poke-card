@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DeckService } from '../services/deck/deck.service';
+import { Deck, DeckService } from '../services/deck/deck.service';
 import { NgFor } from '@angular/common';
 
 @Component({
@@ -22,5 +22,14 @@ export class HomeComponent implements OnInit {
 
   async getAllDeck(){
     this.decks = await this.deckService.getAllDeck();
+  }
+
+  async createNewDeck(){
+    console.log('ok')
+    const deck: Deck = {
+      name: 'novo deck criado'
+    }
+    const response = await this.deckService.createDeck(deck)
+    console.log(response);
   }
 }
