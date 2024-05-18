@@ -63,5 +63,15 @@ export class HomeComponent implements OnInit {
     console.log(response);
   }
 
+  async insertCardsInDeck(){
+    const card = {
+      id: 'cardId',
+      imgage: 'cardImage'
+    }
+    const response = await this.cardInDeckService.insertCardsInDeck(this.decks[0].id, card);
+    console.log(response);
+
+  }
+
   
 }

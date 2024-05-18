@@ -28,8 +28,8 @@ import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, setDoc } fro
       return docRef;
   }
 
-    async insertCollection(values: any, collectionName: string){
-      const col = collection(this.firestore, collectionName);
+    async insertCollection(values: any, collectionName: string, docRef?: any){
+      const col = collection(docRef || this.firestore, collectionName);
       try {
         const docRef = await addDoc(col, values);
         console.log("Documento adicionado com ID: ", docRef.id);
