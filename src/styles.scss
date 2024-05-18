@@ -12,6 +12,10 @@ $surface: #fff !default;
 $app-palette: palette($primary, $secondary, $surface);
 
 /* autoprefixer grid: on */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
 
 @include core();
 @include typography($font-family: $material-typeface, $type-scale: $material-type-scale);
