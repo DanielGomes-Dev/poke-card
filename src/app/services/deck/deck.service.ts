@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { FirestoreService } from '../firebase/firestore.service';
 
+export interface Deck {
+  id?: number,
+  name: string,
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -10,5 +14,9 @@ export class DeckService {
 
   getAllDeck(){
     return this.firestore.getCollection('decks');
+  }
+
+  createDeck(values: any){
+    return this.firestore.insertCollection(values, 'decks');
   }
 }
