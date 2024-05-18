@@ -19,4 +19,8 @@ export class DeckService {
   createDeck(values: any){
     return this.firestore.insertCollection(values, 'decks');
   }
+
+  updateDeck(values: any, docId: string){
+    return this.firestore.updateDocument(docId, values, 'decks');
+  }
 }
