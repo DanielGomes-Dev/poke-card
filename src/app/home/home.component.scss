@@ -23,3 +23,22 @@ h4 {
     height: 80%;
     align-items: center;
 }
+
+.button-home>div {
+    background: linear-gradient(to right, #ff00e1, #ff9df4);
+}
+
+.principal-div {
+    background: linear-gradient(to right, #1f97ff, #5ab2ff);
+}
+
+.header-div {
+    background-color: #1879ff;
+    padding: 25px;
+    font-weight: 600;
+    color: #FCFBF7;
+}
+
+.header-div>h6 {
+    font-size: 35px !important;
+}

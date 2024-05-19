@@ -1,18 +1,21 @@
 <div class="w-full flex justify-center items-center h-full relative">
-    <div class="w-10/12 bg-white h-10/12 pt-7 pb-7  rounded-3xl container shadow-emerald-700">
+    <div class="w-10/12 bg-slate-400 principal-div h-10/12 pb-7  rounded-3xl">
+        <div class="w-full header-div rounded-tr-3xl rounded-tl-3xl">
+            <h6>Home</h6>
+        </div>
         <div class="">
             <div class="w-11/12 flex justify-center items-center p-10 m-auto rounded-3xl">
-                <h1 class="text-gray-800">Bem vindo ao projeto Pokemon Card Game</h1>
+                <h1 class="text-white">Bem vindo ao projeto Pokemon Card Game</h1>
             </div>
         </div>
-        <div class="flex flex-row mt-40 flex-wrap">
-            <div [routerLink]="deckview" class="w-1/4 min-w-52 mt-4 bg-cyan-500 flex justify-center items-center p-4 m-auto rounded-3xl cursor-pointer">
+        <div class="flex flex-row mt-40 flex-wrap button-home">
+            <div [routerLink]="deckview" class="w-1/4 min-w-52 mt-4 bg-fuchsia-700 flex justify-center items-center p-4 m-auto rounded-3xl cursor-pointer">
                 <h4 class="text-white">Veja seus Baralhos</h4>
             </div>
-            <div [routerLink]="createdeck" class="w-1/4 min-w-52 mt-4 bg-cyan-500 flex justify-center items-center p-4 m-auto rounded-3xl cursor-pointer">
+            <div [routerLink]="createdeck" class="w-1/4 min-w-52 mt-4 bg-fuchsia-700 flex justify-center items-center p-4 m-auto rounded-3xl cursor-pointer">
                 <h4 class="text-white">Criar Baralho</h4>
             </div>
-            <div [routerLink]="listRoute" class="w-1/4 min-w-52 mt-4 bg-cyan-500 flex justify-center items-center p-4 m-auto rounded-3xl cursor-pointer">
+            <div [routerLink]="listRoute" class="w-1/4 min-w-52 mt-4 bg-fuchsia-700 flex justify-center items-center p-4 m-auto rounded-3xl cursor-pointer">
                 <h4 class="text-white">Veja seus Baralhos</h4>
             </div>
         </div>

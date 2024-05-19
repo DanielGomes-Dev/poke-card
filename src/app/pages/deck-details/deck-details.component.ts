@@ -6,19 +6,20 @@ import { CardService } from '../../services/card/card.service';
 import { Card } from 'pokemon-tcg-sdk-typescript/dist/sdk';
 import { CardViewComponent } from "../../components/card-view/card-view.component";
 import { ToastComponent } from "../../components/toast/toast.component";
+import { DetailsTypesComponent } from '../../components/details-types/details-types.component';
 
 @Component({
     selector: 'app-deck-details',
     standalone: true,
     templateUrl: './deck-details.component.html',
     styleUrl: './deck-details.component.scss',
-    imports: [ListComponent, CardViewComponent, ToastComponent]
+    imports: [ListComponent, CardViewComponent, ToastComponent, DetailsTypesComponent]
 })
 export class DeckDetailsComponent implements OnInit {
   toast = false;
   cardsInDeck: any = []
   cardsOutDeck: Card[] = []
-
+  deckDetails = false;
   addCard = false;
   deckId: string = ""
   constructor(private route: ActivatedRoute, private cardInDeckService: CardInDeckService, private cardService: CardService,
@@ -53,7 +54,9 @@ export class DeckDetailsComponent implements OnInit {
     this.cardsOutDeck = this.cardsOutDeck.concat(allCards);
   }
 
- 
+ showDeckDetails(){
+  this.deckDetails = true
+ }
 
   addCardsInDeck(card: Card | any){
     const cardToInsert: CardInDeck | any = {
