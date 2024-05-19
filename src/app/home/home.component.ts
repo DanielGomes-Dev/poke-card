@@ -21,7 +21,8 @@ export class HomeComponent implements OnInit {
   decks: Deck[] = [];
   cards: any[] = []
   listRoute = "/list"
-  deckview = "/deckview"
+  deckview = "/deck-view"
+  createdeck = "/create-deck"
   constructor(
     private deckService: DeckService,
     private cardInDeckService: CardInDeckService
@@ -40,16 +41,7 @@ export class HomeComponent implements OnInit {
   //   console.log(deck);
   // }
 
-  async createNewDeck(){
-    console.log('ok')
-    const deck: createDeck = {
-      name: 'novo deck criado'
-    }
-    const response = await this.deckService.createDeck(deck)
-    await this.getAllDeck()
-
-    console.log(response);
-  }
+ 
 
   async updateDeck(){
     const response = await this.deckService.updateDeck({name: 'deckEditado' + new Date()}, this.decks[0].id)
