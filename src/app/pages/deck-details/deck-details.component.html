@@ -65,9 +65,15 @@
     </div>
 
     } } @defer (when deckDetails) {
-    <div class="w-4/5 mt-5">
-        <app-details-types [cards]="cardsInDeck"></app-details-types>
+    <div class="w-full flex justify-center mt-5">
+        <div class="w-1/3">
+            <app-details-types [cards]="cardsInDeck" [atribute]="'types'"></app-details-types>
+        </div>
+        <div class="w-1/3">
+            <app-details-types [cards]="cardsInDeck" [atribute]="'supertype'"></app-details-types>
+        </div>
     </div>
+
     }
 
 </div>
