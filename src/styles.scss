@@ -1,26 +1,60 @@
 /* You can add global styles to this file, and also import other style files */
+
 // Standard CSS normalize, comment out if not required or using a different module
 @use "minireset.css/minireset";
 
 /* See: https://www.infragistics.com/products/ignite-ui-angular/angular/components/themes/sass/index */
-@use "igniteui-angular/theming" as *;
 
+@use "igniteui-angular/theming" as *;
 $primary: #09f !default;
 $secondary: #4db8ff !default;
 $surface: #fff !default;
-
 $app-palette: palette($primary, $secondary, $surface);
 
 /* autoprefixer grid: on */
+
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-
-
 @include core();
 @include typography($font-family: $material-typeface, $type-scale: $material-type-scale);
 @include theme($app-palette);
+html,
+body {
+    height: 100%;
+}
 
-html, body {
-  height: 100%;
+.central-div {
+    border-radius: 40px;
+    background: linear-gradient(to right, #1f97ff, #5ab2ff);
+}
+
+.sub-div-first {
+    background: linear-gradient(to right, #1f44ff, #5a60ff);
+    padding: 20px;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+}
+
+.sub-div-first>h5 {
+    margin: auto;
+    color: #fff;
+    font-weight: 600;
+}
+
+.button-div1 {
+    transition: transform 0.3s ease-in-out, background 0.3s ease-in-out;
+    background: linear-gradient(to right, #ff00e1, #ff9df4);
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 10px;
+    margin: 5px;
+    width: 40%;
+    text-align: center;
+    color: #fff;
+}
+
+.button-div1:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease-in-out, background 0.3s ease-in-out;
 }
