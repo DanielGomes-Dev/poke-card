@@ -9,7 +9,7 @@ import { DetailsTypesComponent } from './components/details-types/details-types.
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, data: { text: 'Home' } },
-  { path: 'deck-view', component: DeckViewComponent, data: { text: 'Visualizar cards' } },
+  { path: 'deck-view', component: DeckViewComponent, data: { text: 'Bisualizar baralhos' } },
   { path: 'create-deck', component: CreateDeckComponent, data: { text: 'Criar novo baralho' } },
   { path: 'deck-details', component: DeckDetailsComponent },
 
