@@ -1,3 +1,6 @@
 <div class="w-auto h-auto overflow-visible flex justify-center align-middle">
-    <img id={{card.id}} class="w-4/5 h-4/5 hover:w-full hover:h-full relative hover:duration-500 duration-500 cursor-pointer hover:scale-110" src={{card.image}} alt="">
+    @if ( card.image ) {
+
+    <img id={{card.id}} class="w-4/5 h-4/5 hover:w-full hover:h-full relative hover:duration-500 duration-500 cursor-pointer hover:scale-110" src={{card.image}} alt=""> }@else {
+    <img id={{card.id}} class="w-4/5 h-4/5 hover:w-full hover:h-full relative hover:duration-500 duration-500 cursor-pointer hover:scale-110" src={{card.images.small}} alt=""> }
 </div>

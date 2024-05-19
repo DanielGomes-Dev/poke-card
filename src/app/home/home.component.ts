@@ -64,7 +64,7 @@ export class HomeComponent implements OnInit {
   }
 
   async insertCardsInDeck(){
-    const card = {
+    const card:any = {
       cardId: 'cardId',
       image: 'cardImage'
     }

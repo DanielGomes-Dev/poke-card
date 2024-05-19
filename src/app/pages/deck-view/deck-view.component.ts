@@ -14,8 +14,7 @@ import { RouterLink } from '@angular/router';
 export class DeckViewComponent implements OnInit {
 
   decks: any = [];
-  list="/list"
-  loadCardDeck = true;
+  deckdetails="/deck-details"
   constructor(private deckService: DeckService) {
     
   }
