@@ -25,7 +25,13 @@ h4 {
 }
 
 .button-home>div {
+    transition: transform 0.3s ease-in-out, background 0.3s ease-in-out;
     background: linear-gradient(to right, #ff00e1, #ff9df4);
+}
+
+.button-home>div:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease-in-out, background 0.3s ease-in-out;
 }
 
 .principal-div {
