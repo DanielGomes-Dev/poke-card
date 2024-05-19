@@ -12,7 +12,6 @@ export const routes: Routes = [
   { path: 'deck-view', component: DeckViewComponent, data: { text: 'Visualizar cards' } },
   { path: 'create-deck', component: CreateDeckComponent, data: { text: 'Criar novo baralho' } },
   { path: 'deck-details', component: DeckDetailsComponent },
-  { path: 'details-types', component: DetailsTypesComponent, data: { text: 'details-types' } },
 
   { path: '**', component: HomeComponent } // must always be last
 ];
