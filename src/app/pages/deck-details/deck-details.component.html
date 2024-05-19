@@ -9,9 +9,7 @@
 
     </div>
     <div class="w-10/12">
-
         <div>
-
             @if (cardsInDeck && cardsInDeck.length) {
             <div>
                 <div class="w-auto flex flex-wrap justify-start min-w-80">
@@ -32,9 +30,9 @@
         <div>
             @if (!addCard) {
             <button (click)="showCardsToAdd()" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-                        Adicionar Cartas
+                        Adicionar ou Remover Cartas
                     </button> }@else {
-            <button (click)="saveAllCardsAddInDeck()" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+            <button (click)="save()" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
                         Salvar Baralho
                     </button> }
         </div>

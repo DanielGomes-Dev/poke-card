@@ -4,7 +4,7 @@ import { FirestoreService } from '../firebase/firestore.service';
 export interface CardInDeck {
     cardId: string;
     name: string;
-    images: string;
+    image: string;
     supertype: string;
     types: any[] | undefined;
 }

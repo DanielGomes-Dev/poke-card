@@ -10,3 +10,8 @@ button {
     font-weight: 600;
     padding: 20px;
 }
+
+:host {
+    width: 100%;
+    padding: 5%;
+}
