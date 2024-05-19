@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FirestoreService } from '../firebase/firestore.service';
+import { Service } from '../firebase/service.adapter';
 
 export interface Deck {
   id: string,
@@ -14,25 +14,25 @@ export interface createDeck{
 })
 export class DeckService {
 
-  constructor(private firestore: FirestoreService) {}
+  constructor(private service: Service) {}
 
   getAllDeck(){
-    return this.firestore.getCollection<Deck[]>('decks');
+    return this.service.getAll<Deck[]>('decks');
   }
 
   getDeckById(docId:string){
-    return this.firestore.getDocRefById<Deck>(docId, 'decks');
+    return this.service.getById<Deck>(docId, 'decks');
   }
 
   createDeck(values: createDeck){
-    return this.firestore.insertCollection(values, 'decks');
+    return this.service.insert(values, 'decks');
   }
 
   updateDeck(values: any, docId: string){
-    return this.firestore.updateDocument(docId, values, 'decks');
+    return this.service.update(docId, values, 'decks');
   }
 
   deleteDeck(docId: string){
-    return this.firestore.deleteDocument(docId, 'decks');
+    return this.service.delete(docId, 'decks');
   }
 }

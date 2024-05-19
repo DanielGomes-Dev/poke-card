@@ -16,68 +16,14 @@ import { ListComponent } from '../components/list/list.component';
     RouterOutlet
   ]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   title = 'Welcome to Ignite UI for Angular!';
-  decks: Deck[] = [];
-  cards: any[] = []
+
   listRoute = "/list"
   deckview = "/deck-view"
   createdeck = "/create-deck"
   constructor(
-    private deckService: DeckService,
-    private cardInDeckService: CardInDeckService
   ) { }
 
-  ngOnInit(): void {
-    this.getAllDeck()
-  }
-
-  async getAllDeck(){
-    this.decks = await this.deckService.getAllDeck();
-  }
-
-  // async getDeckById(){
-  //   const deck = await this.deckService.getDeckById(this.decks[0].id);
-  //   console.log(deck);
-  // }
-
- 
-
-  async updateDeck(){
-    const response = await this.deckService.updateDeck({name: 'deckEditado' + new Date()}, this.decks[0].id)
-    await this.getAllDeck()
-
-    console.log(response);
-  }
-
-  async deleteDeck(){
-    const response = await this.deckService.deleteDeck(this.decks[0].id)
-    await this.getAllDeck()
-
-    console.log(response);
-  }
-
-  async getAllCardInDeck(){
-    const response = await this.cardInDeckService.getAllCardInDeck(this.decks[0].id);
-    console.log(response);
-    this.cards = response;
-  }
-
-  async insertCardsInDeck(){
-    const card:any = {
-      cardId: 'cardId',
-      image: 'cardImage'
-    }
-    const response = await this.cardInDeckService.insertCardsInDeck(this.decks[0].id, card);
-    console.log(response);
-    await this.getAllCardInDeck();
-
-  }
-
-  async removeCardsInDeck(){
-    await this.cardInDeckService.removeCardsInDeck(this.decks[0].id, this.cards[0].id)
-    await this.getAllCardInDeck();
-  
-  }
   
 }
