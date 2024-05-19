@@ -1,9 +1,5 @@
-import { booleanAttribute, Component, input, Input, OnInit } from '@angular/core';
-import { CardService } from '../../services/card/card.service';
-import { Card } from 'pokemon-tcg-sdk-typescript/dist/sdk';
+import { Component, Input } from '@angular/core';
 import { CardViewComponent } from '../card-view/card-view.component';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CardInDeckService } from '../../services/cardsInDeck/card-in-deck.service';
 
 
 @Component({
@@ -13,27 +9,13 @@ import { CardInDeckService } from '../../services/cardsInDeck/card-in-deck.servi
   standalone: true,
   imports: [CardViewComponent]
 })
-export class ListComponent implements OnInit  {
+export class ListComponent   {
 
-  cards = [];
+  @Input() cards: any
 
-  constructor(private route: ActivatedRoute, private cardInDeckService: CardInDeckService) {
+  constructor() {
+    console.log(this.cards,'cards')
     
   }
-  async ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      console.log(params['deckId']);
-      const deckId = params['deckId'];
-      this.getAllCardInDeck(deckId)
-    });
-  }
-
-  async getAllCardInDeck(deckId:string){
-    this.cards = await this.cardInDeckService.getAllCardInDeck(deckId)
-    console.log(this.cards);
-    
-  }
-
-  
 
 }
