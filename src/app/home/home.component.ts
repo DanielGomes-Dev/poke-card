@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
   decks: Deck[] = [];
   cards: any[] = []
   listRoute = "/list"
+  deckview = "/deckview"
   constructor(
     private deckService: DeckService,
     private cardInDeckService: CardInDeckService
