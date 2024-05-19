@@ -55,15 +55,15 @@ export class DeckDetailsComponent implements OnInit {
 
  
 
-  addCardsInDeck(card: Card){
-    const cardToInsert: CardInDeck = {
+  addCardsInDeck(card: Card | any){
+    const cardToInsert: CardInDeck | any = {
       cardId: card.id,
       name: card.name,
       image: card.images.small,
       supertype: card.supertype,
       types: card.types,
-      isNew: true
-    } as any
+      isNew: card.cardToRemove ? false : true 
+    } 
     this.cardsInDeck.unshift(cardToInsert)
     this.removeCardsOutDeck(card.id)
     console.log(this.cardsInDeck,'cardsInDeck');
@@ -77,10 +77,16 @@ export class DeckDetailsComponent implements OnInit {
   }
  
 
-  addCardsOutDeck(card: CardInDeck){
+  addCardsOutDeck(card: CardInDeck | any){
     console.log(card);
     if(!this.addCard) return
-    const cardToInsert = {...card, cardToRemove: true, id: card.cardId}
+    const cardToInsert: Card | any = {
+      ...card,
+      images: {
+                small : card.image
+              },
+       cardToRemove: card.isNew ? false : true
+      }
     this.cardsOutDeck.unshift(cardToInsert as any)
     this.removeCardsInDeck(card.cardId);
   }
@@ -98,6 +104,13 @@ export class DeckDetailsComponent implements OnInit {
     },2000)
   }
 
+  async save(){
+    await this.saveAllCardsAddInDeck()
+    await this.removeCardsFromDeck()
+    this.showToast();
+
+  }
+
 
   async saveAllCardsAddInDeck(){
     const cardsToSave = []
@@ -111,10 +124,26 @@ export class DeckDetailsComponent implements OnInit {
     for (const card of cardsToSave) {
       await this.cardInDeckService.insertCardsInDeck(this.deckId, card)
     }
-    console.log(cardsToSave,'cardsToSave')
-    this.showToast();
-    this.getAllCardInDeck(this.deckId)
+    if(cardsToSave.length){
+      this.getAllCardInDeck(this.deckId)
+    }
+    // this.getAllCardInDeck(this.deckId)
 
+  }
+
+  async removeCardsFromDeck(){
+    const cardsToRemove: any = []
+    this.cardsOutDeck.forEach((card:any) => {
+      if(card.cardToRemove){
+        delete card.cardToRemove
+        cardsToRemove.push(card)
+      }
+    })
+    //Refatorar
+    for (const card of cardsToRemove) {
+      console.log(card)
+      await this.cardInDeckService.removeCardsInDeck(this.deckId, card.id);
+    }
   }
 
 }
