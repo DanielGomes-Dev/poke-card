@@ -4,13 +4,15 @@ import { ListComponent } from './components/list/list.component';
 import { DeckViewComponent } from './pages/deck-view/deck-view.component';
 import { CreateDeckComponent } from './pages/create-deck/create-deck.component';
 import { DeckDetailsComponent } from './pages/deck-details/deck-details.component';
+import { DetailsTypesComponent } from './components/details-types/details-types.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, data: { text: 'Home' } },
   { path: 'deck-view', component: DeckViewComponent, data: { text: 'Visualizar cards' } },
   { path: 'create-deck', component: CreateDeckComponent, data: { text: 'Criar novo baralho' } },
-  { path: 'deck-details', component: DeckDetailsComponent},
+  { path: 'deck-details', component: DeckDetailsComponent },
+  { path: 'details-types', component: DetailsTypesComponent, data: { text: 'details-types' } },
 
   { path: '**', component: HomeComponent } // must always be last
 ];

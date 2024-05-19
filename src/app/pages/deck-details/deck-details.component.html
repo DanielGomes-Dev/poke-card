@@ -1,4 +1,4 @@
-<div class="w-full h-full flex flex-col justify-center justify-items-center items-center align-middle">
+<div class="w-full h-full flex flex-col justify-center justify-items-center items-center align-middle mb-10">
     @defer (when toast) { @if(toast){
     <div class="w-full flex justify-center absolute top-0 z-50">
         <app-toast class="relative transition-all duration-500"></app-toast>
@@ -26,8 +26,8 @@
         </div>
     </div>
 
-    <div>
-        <div>
+    <div class="flex">
+        <div class="mr-10">
             @if (!addCard) {
             <button (click)="showCardsToAdd()" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
                         Adicionar ou Remover Cartas
@@ -35,6 +35,12 @@
             <button (click)="save()" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
                         Salvar Baralho
                     </button> }
+        </div>
+        <div>
+            <button (click)="showDeckDetails()" class="bg-transparent 
+            hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                Informações do Baralho
+            </button>
         </div>
 
     </div>
@@ -58,6 +64,10 @@
         </div>
     </div>
 
-    } }
+    } } @defer (when deckDetails) {
+    <div class="w-4/5 mt-5">
+        <app-details-types [cards]="cardsInDeck"></app-details-types>
+    </div>
+    }
 
 </div>
