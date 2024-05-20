@@ -17,7 +17,7 @@ import { DetailsTypesComponent } from '../../components/details-types/details-ty
 })
 export class DeckDetailsComponent implements OnInit {
   toast = false;
-  cardsInDeck: any = []
+  cardsInDeck: CardInDeck[] = []
   cardsOutDeck: Card[] = []
   deckDetails = false;
   addCard = false;
@@ -62,16 +62,21 @@ export class DeckDetailsComponent implements OnInit {
  }
 
   addCardsInDeck(card: Card | any){
+    console.log(card, 'addCardsInDeck1')
+    if(!this.addCard) return
     const cardToInsert: CardInDeck | any = {
-      cardId: card.id,
+      cardId: card.cardId || card.id,
       name: card.name,
       image: card.images.small,
       supertype: card.supertype,
       types: card.types,
       isNew: card.cardToRemove ? false : true 
     } 
+    console.log(this.cardsOutDeck,'this.cardsOutDeck');
     this.cardsInDeck.unshift(cardToInsert)
+    console.log(this.cardsOutDeck,'this.cardsOutDeck');
     this.removeCardsOutDeck(card.id)
+    console.log(this.cardsOutDeck,'this.cardsOutDeck');
     
   }
 
@@ -82,7 +87,10 @@ export class DeckDetailsComponent implements OnInit {
  
 
   addCardsOutDeck(card: CardInDeck | any){
+    console.log(card,'card')
     if(!this.addCard) return
+    console.log(card,'card2')
+
     const cardToInsert: Card | any = {
       ...card,
       images: {
@@ -90,12 +98,15 @@ export class DeckDetailsComponent implements OnInit {
               },
        cardToRemove: card.isNew ? false : true
       }
+      console.log(cardToInsert,'cardToInsert')
     this.cardsOutDeck.unshift(cardToInsert as any)
     this.removeCardsInDeck(card.cardId);
   }
 
   removeCardsOutDeck(cardId: string){
-    const indexToRemove = this.cardsOutDeck.findIndex(cod => cod.id == cardId)
+    const cards: any = this.cardsOutDeck as any
+    const indexToRemove = cards.findIndex((cod: any) => cod.id == cardId || cod.cardId == cardId)
+    console.log(indexToRemove,'indexToRemove');
     this.cardsOutDeck.splice(indexToRemove, 1)
   }
 
@@ -110,7 +121,7 @@ export class DeckDetailsComponent implements OnInit {
 
   async save(){
     const verified = this.cardsInDeckVerify();
-    if(verified.error) return this.showToast(verified.error, true);
+    // if(verified.error) return this.showToast(verified.error, true);
     await this.saveAllCardsAddInDeck()
     await this.removeCardsFromDeck()
     this.showToast('Salvo com sucesso', false);
@@ -119,8 +130,9 @@ export class DeckDetailsComponent implements OnInit {
 
 
   async saveAllCardsAddInDeck(){
+    const cards: any = [...this.cardsInDeck]
     const cardsToSave = []
-    for (const card of this.cardsInDeck) {
+    for (const card of cards) {
       if(card.isNew){
         delete card.isNew
         cardsToSave.push(card);

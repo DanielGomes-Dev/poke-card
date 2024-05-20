@@ -14,12 +14,9 @@
 } -->
 
 <div class="w-auto flex flex-wrap justify-start min-w-80">
-    @if (cards.length) { @for(card of cards; track $index){
-    <div class="flex flex-wrap w-auto h-72 hover:z-10 mb-3 ">
+    @for(card of cards(); track $index){
+    <div (click)="cardClicked(card)" class="flex flex-wrap w-auto h-72 hover:z-10 mb-3 ">
         <app-card-view class="w-auto min-w-52" [card]="card"></app-card-view>
     </div>
-
-    }@empty { Lista Vazia } }@else {
-    <p>Carregando</p>
     }
 </div>
