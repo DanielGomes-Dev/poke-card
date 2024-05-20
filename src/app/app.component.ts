@@ -30,7 +30,7 @@ import { routes } from './app.routes';
     RouterLink,
     IgxFlexDirective,
     IgxNavbarComponent,
-    RouterOutlet
+    RouterOutlet,
   ]
 })
 export class AppComponent implements OnInit {

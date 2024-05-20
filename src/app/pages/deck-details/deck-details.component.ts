@@ -29,16 +29,14 @@ export class DeckDetailsComponent implements OnInit {
 
   async ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      console.log(params['deckId']);
       this.deckId = params['deckId'];
       this.getAllCardInDeck(this.deckId)
     });
   }
 
   async getAllCardInDeck(deckId:string){
-    this.cardsInDeck = await this.cardInDeckService.getAllCardInDeck(deckId)
-    console.log(this.cardsInDeck, 'cardsInDeck');
-    
+    const response = await this.cardInDeckService.getAllCardInDeck(deckId)    
+    this.cardsInDeck = [...response];
   }
 
   async showCardsToAdd(){
@@ -69,19 +67,16 @@ export class DeckDetailsComponent implements OnInit {
     } 
     this.cardsInDeck.unshift(cardToInsert)
     this.removeCardsOutDeck(card.id)
-    console.log(this.cardsInDeck,'cardsInDeck');
     
   }
 
   removeCardsInDeck(cardId: string){
     const indexToRemove = this.cardsInDeck.findIndex((cod: any) => cod.cardId == cardId)
     this.cardsInDeck.splice(indexToRemove, 1)
-    console.log(this.cardsInDeck,'cardsInDeck');
   }
  
 
   addCardsOutDeck(card: CardInDeck | any){
-    console.log(card);
     if(!this.addCard) return
     const cardToInsert: Card | any = {
       ...card,
@@ -97,7 +92,6 @@ export class DeckDetailsComponent implements OnInit {
   removeCardsOutDeck(cardId: string){
     const indexToRemove = this.cardsOutDeck.findIndex(cod => cod.id == cardId)
     this.cardsOutDeck.splice(indexToRemove, 1)
-    console.log(this.cardsOutDeck,'cardsOutDeck');
   }
 
   showToast(){
@@ -130,8 +124,6 @@ export class DeckDetailsComponent implements OnInit {
     if(cardsToSave.length){
       this.getAllCardInDeck(this.deckId)
     }
-    // this.getAllCardInDeck(this.deckId)
-
   }
 
   async removeCardsFromDeck(){
@@ -142,9 +134,7 @@ export class DeckDetailsComponent implements OnInit {
         cardsToRemove.push(card)
       }
     })
-    //Refatorar
     for (const card of cardsToRemove) {
-      console.log(card)
       await this.cardInDeckService.removeCardsInDeck(this.deckId, card.id);
     }
   }

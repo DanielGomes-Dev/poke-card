@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FirestoreService } from '../firebase/firestore.service';
+import { Service } from '../firebase/service.adapter';
 
 export interface CardInDeck {
     cardId: string;
@@ -14,23 +14,23 @@ export interface CardInDeck {
 export class CardInDeckService {
 
   
-  constructor(private firestore: FirestoreService) { }
+  constructor(private service: Service) { }
 
   async getAllCardInDeck(deckId: string){
-    const deckRef = await this.firestore.getDocRefById(deckId, 'decks');
-    const cards = await this.firestore.getCollection<CardInDeck[]>('cards', deckRef);
+    const deckRef = await this.service.getById<string>(deckId, 'decks');
+    const cards = await this.service.getAll<CardInDeck[]>('cards', deckRef);
     return cards
   }
 
   async insertCardsInDeck(deckId: string, values: CardInDeck){
-    const deckRef = await this.firestore.getDocRefById(deckId, 'decks');
-    const cards = await this.firestore.insertCollection(values, 'cards', deckRef);
+    const deckRef = await this.service.getById(deckId, 'decks');
+    const cards = await this.service.insert(values, 'cards', deckRef);
     return cards
   }
 
   async removeCardsInDeck(deckId: string, cardId: any){
-    const deckRef = await this.firestore.getDocRefById(deckId, 'decks');
-    const cards = await this.firestore.deleteDocument(cardId, 'cards', deckRef);
+    const deckRef = await this.service.getById(deckId, 'decks');
+    const cards = await this.service.delete(cardId, 'cards', deckRef);
     return cards
   }
 } 

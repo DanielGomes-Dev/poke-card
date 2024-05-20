@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [IgxCategoryChartModule]
 })
-export class DetailsTypesComponent implements OnInit {
+export class DetailsTypesComponent  {
   public chartType = 'Column';
 
   atribute = input.required<string>();
@@ -45,14 +45,5 @@ export class DetailsTypesComponent implements OnInit {
     })
     return data
   })
-
-
-  ngOnInit(){
-    console.log('iniciou');
-    console.log(this.cardData(), 'this.cardData');
-    setTimeout(()=>{
-      console.log(this.cardData(), 'this.cardData');
-    },2000)
-  }
 
 }

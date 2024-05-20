@@ -24,7 +24,6 @@ export class DeckViewComponent implements OnInit {
   }
   async getAllDeck(){
     this.decks = await this.deckService.getAllDeck();
-    console.log(this.decks);
   }
 
   async deleteDeck(deckId:string){

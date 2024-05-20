@@ -13,9 +13,5 @@ export class ListComponent   {
 
   @Input() cards: any
 
-  constructor() {
-    console.log(this.cards,'cards')
-    
-  }
 
 }
