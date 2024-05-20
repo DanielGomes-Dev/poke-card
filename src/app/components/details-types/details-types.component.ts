@@ -1,7 +1,6 @@
-import { Component, computed, input, OnInit } from '@angular/core';
-import { CategoryChartType, IgxCategoryChartModule } from 'igniteui-angular-charts';
+import { Component, computed, input } from '@angular/core';
+import { IgxCategoryChartModule } from 'igniteui-angular-charts';
 import { CardInDeck } from '../../services/cardsInDeck/card-in-deck.service';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-details-types',

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CardInDeck, CardInDeckService } from '../../services/cardsInDeck/card-in-deck.service';
 import { ListComponent } from '../../components/list/list.component';
@@ -22,6 +22,11 @@ export class DeckDetailsComponent implements OnInit {
   deckDetails = false;
   addCard = false;
   deckId: string = ""
+  cardsToSave = output<any[]>();
+  toastMessage: string = "";
+  errorToast: boolean = false;
+
+
   constructor(private route: ActivatedRoute, private cardInDeckService: CardInDeckService, private cardService: CardService,
   ) {
     
@@ -94,7 +99,9 @@ export class DeckDetailsComponent implements OnInit {
     this.cardsOutDeck.splice(indexToRemove, 1)
   }
 
-  showToast(){
+  showToast(toastMessage: string, errorToast:boolean){
+    this.toastMessage = toastMessage
+    this.errorToast = errorToast
     this.toast = true;
     setTimeout(()=>{
       this.toast = false;
@@ -102,9 +109,11 @@ export class DeckDetailsComponent implements OnInit {
   }
 
   async save(){
+    const verified = this.cardsInDeckVerify();
+    if(verified.error) return this.showToast(verified.error, true);
     await this.saveAllCardsAddInDeck()
     await this.removeCardsFromDeck()
-    this.showToast();
+    this.showToast('Salvo com sucesso', false);
 
   }
 
@@ -117,12 +126,17 @@ export class DeckDetailsComponent implements OnInit {
         cardsToSave.push(card);
       }
     }
-    //refatorar
-    for (const card of cardsToSave) {
-      await this.cardInDeckService.insertCardsInDeck(this.deckId, card)
-    }
+   
     if(cardsToSave.length){
-      this.getAllCardInDeck(this.deckId)
+      if(this.deckId){
+        for (const card of cardsToSave) {
+          await this.cardInDeckService.insertCardsInDeck(this.deckId, card)
+        }  
+        this.getAllCardInDeck(this.deckId)
+      }else{
+        console.log('okok')
+        this.cardsToSave.emit([...cardsToSave]);
+      }
     }
   }
 
@@ -136,6 +150,41 @@ export class DeckDetailsComponent implements OnInit {
     })
     for (const card of cardsToRemove) {
       await this.cardInDeckService.removeCardsInDeck(this.deckId, card.id);
+    }
+  }
+
+
+  cardsInDeckVerify(){
+    if(!this.verifyNamesInDeck()) return {error: "Você só pode adicionar até 4 cartas com o mesmo nome;"}
+    if(!this.verifyQuantityCardsInDeck()) return {error: "A Quantidade de Cartas deve ser no minimo 24 e no maximo 60;"}
+    return {error: null};
+  }
+
+  verifyNamesInDeck(){
+    const cards = this.cardsInDeck;
+
+    for (const card of cards) {
+      const name = card.name
+      let quantityNames = 0
+      for (const card2 of cards) {
+        if(card.name == card2.name){
+          quantityNames += 1;
+          if(quantityNames > 4){
+            return false;
+          }
+        }
+      }      
+    }
+
+    return true
+  }
+
+  verifyQuantityCardsInDeck(){
+    const quantity = this.cardsInDeck.length
+    if(quantity < 24 || quantity > 60){
+      return false
+    }else{
+      return true
     }
   }
 

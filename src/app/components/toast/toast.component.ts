@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-toast',
@@ -9,4 +9,6 @@ import { Component } from '@angular/core';
 })
 export class ToastComponent {
 
+  error = input.required<boolean>()
+  toastMessage = input.required<string>()
 }

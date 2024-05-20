@@ -1,7 +1,7 @@
 <div class="w-full h-full flex flex-col justify-center justify-items-center items-center align-middle mb-10">
     @defer (when toast) { @if(toast){
-    <div class="w-full flex justify-center absolute top-0 z-50">
-        <app-toast class="relative transition-all duration-500"></app-toast>
+    <div>
+        <app-toast [error]="errorToast" [toastMessage]="toastMessage" class="relative transition-all duration-500"></app-toast>
     </div>
     } }
     <div>
