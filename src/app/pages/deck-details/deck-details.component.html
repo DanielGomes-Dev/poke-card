@@ -1,7 +1,7 @@
 <div class="w-full h-full flex flex-col justify-center justify-items-center items-center align-middle mb-10">
     @defer (when toast) { @if(toast){
-    <div class="w-full flex justify-center absolute top-0 z-50">
-        <app-toast class="relative transition-all duration-500"></app-toast>
+    <div>
+        <app-toast [error]="errorToast" [toastMessage]="toastMessage" class="relative transition-all duration-500"></app-toast>
     </div>
     } }
     <div>
@@ -10,18 +10,8 @@
     </div>
     <div class="w-10/12">
         <div>
-            @if (cardsInDeck && cardsInDeck.length) {
-            <div>
-                <div class="w-auto flex flex-wrap justify-start min-w-80">
-                    @if (cardsInDeck.length) { @for(card of cardsInDeck; track $index){
-                    <div class="flex flex-wrap w-auto h-72 hover:z-10 mb-3 ">
-                        <app-card-view (click)="addCardsOutDeck(card)" class="w-auto min-w-52" [card]="card"></app-card-view>
-                    </div>
-                    }@empty { Lista Vazia } }@else {
-                    <p>Carregando</p>
-                    }
-                </div>
-            </div>
+            @defer (when cardsInDeck&&cardsInDeck.length) {
+            <app-list [cards]="cardsInDeck" (clickedCard)="addCardsOutDeck($event)"></app-list>
             }
         </div>
     </div>
@@ -50,17 +40,10 @@
         <h4 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl">Clique nas cartas que deseja adicionar ao seu deck</h4>
     </div>
     <div class="w-10/12">
-
         <div>
-            <div class="w-auto flex flex-wrap justify-start min-w-80">
-                @if (cardsOutDeck.length) { @for(card of cardsOutDeck; track $index){
-                <div class="flex flex-wrap w-auto h-72 hover:z-10 mb-3 ">
-                    <app-card-view (click)="addCardsInDeck(card)" class="w-auto min-w-52" [card]="card"></app-card-view>
-                </div>
-                }@empty { Lista Vazia } }@else {
-                <p>Carregando</p>
-                }
-            </div>
+            @defer (when cardsOutDeck&&cardsOutDeck.length) {
+            <app-list [cards]="cardsOutDeck" (clickedCard)="addCardsInDeck($event)"></app-list>
+            }
         </div>
     </div>
 

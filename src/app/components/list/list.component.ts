@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, Input, output } from '@angular/core';
 import { CardViewComponent } from '../card-view/card-view.component';
+import { CardInDeck } from '../../services/cardsInDeck/card-in-deck.service';
+import { Card } from 'pokemon-tcg-sdk-typescript/dist/sdk';
 
 
 @Component({
@@ -10,8 +12,10 @@ import { CardViewComponent } from '../card-view/card-view.component';
   imports: [CardViewComponent]
 })
 export class ListComponent   {
+  cards = input.required< CardInDeck[]>();
+  clickedCard = output<CardInDeck>();
 
-  @Input() cards: any
-
-
+  cardClicked(card: CardInDeck){
+    this.clickedCard.emit(card);
+  }
 }

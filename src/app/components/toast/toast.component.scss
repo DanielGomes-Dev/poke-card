@@ -1,0 +1,13 @@
+.fixePosition {
+    position: fixed;
+    /* ou absolute, dependendo do caso */
+    top: 0;
+    left: 50%;
+    width: 100%;
+    z-index: 1000;
+    /* Certifique-se de que o valor do z-index é alto o suficiente para ficar acima de outros elementos */
+    background-color: #fff;
+    /* Opcional: Define uma cor de fundo para o elemento */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Opcional: Adiciona uma sombra para destacar o elemento */
+}
