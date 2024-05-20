@@ -14,7 +14,6 @@ export class CardService {
 
   async getAll(){
     const cards = await lastValueFrom(this.httpClient.get<{data:Card[]}>(this.url));
-    console.log('ok', cards.data)
     return cards.data;
   }
 

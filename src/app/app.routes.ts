@@ -7,7 +7,7 @@ import { DeckDetailsComponent } from './pages/deck-details/deck-details.componen
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, data: { text: 'Home' } },
-  { path: 'deck-view', component: DeckViewComponent, data: { text: 'Bisualizar baralhos' } },
+  { path: 'deck-view', component: DeckViewComponent, data: { text: 'Visualizar baralhos' } },
   { path: 'create-deck', component: CreateDeckComponent, data: { text: 'Criar novo baralho' } },
   { path: 'deck-details', component: DeckDetailsComponent },
 

@@ -20,13 +20,11 @@ export class CreateDeckComponent {
   async createNewDeck(){
 
     if(!this.deckForm.value) return;
-    console.log(this.deckForm)
     const deck: createDeck = {
       name: this.deckForm.value
     }
     const response = await this.deckService.createDeck(deck)
     this.router.navigate(['/deck-view'])
-    console.log(response);
 
   }
 

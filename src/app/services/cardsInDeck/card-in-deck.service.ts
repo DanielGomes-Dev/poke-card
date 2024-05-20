@@ -17,7 +17,7 @@ export class CardInDeckService {
   constructor(private service: Service) { }
 
   async getAllCardInDeck(deckId: string){
-    const deckRef = await this.service.getById(deckId, 'decks');
+    const deckRef = await this.service.getById<string>(deckId, 'decks');
     const cards = await this.service.getAll<CardInDeck[]>('cards', deckRef);
     return cards
   }

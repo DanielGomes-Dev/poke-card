@@ -34,7 +34,6 @@ import { IService } from "./service.adapter";
       const col = collection(docRef || this.firestore, collectionName);
       try {
         const docRef = await addDoc(col, values);
-        console.log("Documento adicionado com ID: ", docRef.id);
         return docRef.id;
 
       } catch (error) {
@@ -47,23 +46,18 @@ import { IService } from "./service.adapter";
       const docRef = doc(this.firestore, collectionName, docId);
       try {
         await setDoc(docRef, updateData, { merge: true });
-        console.log("Documento atualizado com sucesso");
         return true;
       } catch (e) {
-        console.error("Erro ao atualizar documento: ", e);
         return false;
       }
     }
 
     async delete(docId: string, collectionName: string, deckRef?: any):Promise<boolean>{
       const docRef = doc(deckRef || this.firestore, collectionName, docId);
-      console.log(docRef);
       try {
         await deleteDoc(docRef);
-        console.log("Documento excluído com sucesso");
         return true;
       } catch (e) {
-        console.error("Erro ao excluir documento: ", e);
         return false;
       }
     }
