@@ -12,10 +12,10 @@ import { Card } from 'pokemon-tcg-sdk-typescript/dist/sdk';
   imports: [CardViewComponent]
 })
 export class ListComponent   {
-  cards = input.required<Card[] | CardInDeck[]>();
-  clickedCard = output<CardInDeck | Card>();
+  cards = input.required< CardInDeck[]>();
+  clickedCard = output<CardInDeck>();
 
-  cardClicked(card: CardInDeck | Card){
+  cardClicked(card: CardInDeck){
     this.clickedCard.emit(card);
   }
 }

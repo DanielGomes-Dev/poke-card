@@ -7,6 +7,7 @@ export interface CardInDeck {
     image: string;
     supertype: string;
     types: any[] | undefined;
+    inDeck: boolean;
 }
 @Injectable({
   providedIn: 'root'

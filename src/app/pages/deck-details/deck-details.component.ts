@@ -18,7 +18,7 @@ import { DetailsTypesComponent } from '../../components/details-types/details-ty
 export class DeckDetailsComponent implements OnInit {
   toast = false;
   cardsInDeck: CardInDeck[] = []
-  cardsOutDeck: Card[] = []
+  cardsOutDeck: CardInDeck[] = []
   deckDetails = false;
   addCard = false;
   deckId: string = ""
@@ -32,6 +32,8 @@ export class DeckDetailsComponent implements OnInit {
     
   }
 
+
+
   async ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.deckId = params['deckId'];
@@ -42,41 +44,40 @@ export class DeckDetailsComponent implements OnInit {
   async getAllCardInDeck(deckId:string){
     const response = await this.cardInDeckService.getAllCardInDeck(deckId)    
     this.cardsInDeck = [...response];
+    console.log(this.cardsInDeck);
+  }
+
+  async getAllCardsFromApiAndMap(){
+    const allCards: Card[] = await this.cardService.getAll();
+    return allCards.map((card)=>{
+      return {
+       cardId: card.id,
+       image: card.images.small,
+       name: card.name,
+       supertype: card.supertype,
+       types: card.types,
+       inDeck: false,
+      }
+     })
   }
 
   async showCardsToAdd(){
     this.addCard = true;
-    const allCards = await this.cardService.getAll();
-    this.cardsInDeck.forEach((card:any) => {
-      const response = allCards.findIndex((ac:any) => ac.id == card.cardId)
-      if(response != -1){
-        allCards.splice(response, 1);
-      }
+    const filteredCards = (await this.getAllCardsFromApiAndMap()).filter(card => {
+      return !this.cardsInDeck.find(cid => cid.cardId == card.cardId)
     })
 
-    this.cardsOutDeck = this.cardsOutDeck.concat(allCards);
+    this.cardsOutDeck = this.cardsOutDeck.concat([...filteredCards]);
   }
 
  showDeckDetails(){
   this.deckDetails = true
  }
 
-  addCardsInDeck(card: Card | any){
-    console.log(card, 'addCardsInDeck1')
+  addCardsInDeck(card: CardInDeck){
     if(!this.addCard) return
-    const cardToInsert: CardInDeck | any = {
-      cardId: card.cardId || card.id,
-      name: card.name,
-      image: card.images.small,
-      supertype: card.supertype,
-      types: card.types,
-      isNew: card.cardToRemove ? false : true 
-    } 
-    console.log(this.cardsOutDeck,'this.cardsOutDeck');
-    this.cardsInDeck.unshift(cardToInsert)
-    console.log(this.cardsOutDeck,'this.cardsOutDeck');
-    this.removeCardsOutDeck(card.id)
-    console.log(this.cardsOutDeck,'this.cardsOutDeck');
+    this.cardsInDeck.unshift(card)
+    this.removeCardsOutDeck(card.cardId)
     
   }
 
@@ -86,27 +87,15 @@ export class DeckDetailsComponent implements OnInit {
   }
  
 
-  addCardsOutDeck(card: CardInDeck | any){
-    console.log(card,'card')
+  addCardsOutDeck(card: CardInDeck){
     if(!this.addCard) return
-    console.log(card,'card2')
-
-    const cardToInsert: Card | any = {
-      ...card,
-      images: {
-                small : card.image
-              },
-       cardToRemove: card.isNew ? false : true
-      }
-      console.log(cardToInsert,'cardToInsert')
-    this.cardsOutDeck.unshift(cardToInsert as any)
+    this.cardsOutDeck.unshift(card)
     this.removeCardsInDeck(card.cardId);
   }
 
   removeCardsOutDeck(cardId: string){
     const cards: any = this.cardsOutDeck as any
-    const indexToRemove = cards.findIndex((cod: any) => cod.id == cardId || cod.cardId == cardId)
-    console.log(indexToRemove,'indexToRemove');
+    const indexToRemove = cards.findIndex((cod: any) => cod.cardId == cardId)
     this.cardsOutDeck.splice(indexToRemove, 1)
   }
 
@@ -121,7 +110,7 @@ export class DeckDetailsComponent implements OnInit {
 
   async save(){
     const verified = this.cardsInDeckVerify();
-    // if(verified.error) return this.showToast(verified.error, true);
+    if(verified.error) return this.showToast(verified.error, true);
     await this.saveAllCardsAddInDeck()
     await this.removeCardsFromDeck()
     this.showToast('Salvo com sucesso', false);
@@ -130,15 +119,13 @@ export class DeckDetailsComponent implements OnInit {
 
 
   async saveAllCardsAddInDeck(){
-    const cards: any = [...this.cardsInDeck]
+    const cards = [...this.cardsInDeck]
     const cardsToSave = []
     for (const card of cards) {
-      if(card.isNew){
-        delete card.isNew
-        cardsToSave.push(card);
+      if(!card.inDeck){
+        cardsToSave.push({...card, inDeck: true});
       }
     }
-   
     if(cardsToSave.length){
       if(this.deckId){
         for (const card of cardsToSave) {
@@ -146,7 +133,6 @@ export class DeckDetailsComponent implements OnInit {
         }  
         this.getAllCardInDeck(this.deckId)
       }else{
-        console.log('okok')
         this.cardsToSave.emit([...cardsToSave]);
       }
     }
