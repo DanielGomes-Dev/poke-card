@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
-import { FirestoreService } from "./firestore.service";
+// import { FirestoreService } from "./firestore.service";
+import { InMemoryService } from "./inMemoryService.service";
 
 
 export interface IService {
@@ -18,6 +19,9 @@ export interface IService {
 @Injectable({
     providedIn: 'root'
   })
-export class Service extends FirestoreService implements IService {
+// export class Service extends FirestoreService implements IService {
+
+// }
+export class Service extends InMemoryService implements IService {
 
 }
