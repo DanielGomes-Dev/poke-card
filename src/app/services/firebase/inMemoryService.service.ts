@@ -10,9 +10,21 @@ import { CardInDeck } from "../cardsInDeck/card-in-deck.service";
   export class InMemoryService implements IService {
      
     db: {id:string, name:string, cards: CardInDeck[]}[] = []
+    key = 'db'
     constructor() {
-      
+        this.db = this.getFromLocalStorage() || []
 
+    }
+
+    localStorageUpdate(){
+        const dbJson = JSON.stringify(this.db);
+        localStorage.setItem(this.key, dbJson)
+    }
+
+    getFromLocalStorage(){
+        const jsonData = localStorage.getItem(this.key);
+        console.log(jsonData);
+        return jsonData ? JSON.parse(jsonData) : null;
     }
     
     async getAll<T>(collectionName: string, docRef?: string):Promise<T>{
@@ -37,7 +49,7 @@ import { CardInDeck } from "../cardsInDeck/card-in-deck.service";
         }else{
             this.insertCard({...values}, docRef)
         }
-        
+        this.localStorageUpdate();
         return true as any;
     }
     
@@ -45,6 +57,8 @@ import { CardInDeck } from "../cardsInDeck/card-in-deck.service";
         if(collectionName == "decks"){
            this.updateDeck({...updateData}, docId)
         }
+        this.localStorageUpdate();
+
         return true as any
     }
 
@@ -54,6 +68,8 @@ import { CardInDeck } from "../cardsInDeck/card-in-deck.service";
         }else{
            this.deleteCard(deckRef, docId);
         }
+        this.localStorageUpdate();
+
         return 0 as T;
     }
 

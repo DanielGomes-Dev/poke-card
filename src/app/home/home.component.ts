@@ -4,6 +4,7 @@ import { NgFor } from '@angular/common';
 import { CardInDeckService } from '../services/cardsInDeck/card-in-deck.service';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { ListComponent } from '../components/list/list.component';
+import { CardService } from '../services/card/card.service';
 
 @Component({
   selector: 'app-home',
@@ -22,8 +23,19 @@ export class HomeComponent {
   listRoute = "/list"
   deckview = "/deck-view"
   createdeck = "/create-deck"
-  constructor(
-  ) { }
+  loading = false;
+  constructor(private cardService: CardService
+  ) { 
+    this.loadInformation();
+  }
+  
+  async loadInformation(){
+    this.loading = true;
+    await this.cardService.getAll();
+    this.loading = false;
 
+
+  }
+  
   
 }

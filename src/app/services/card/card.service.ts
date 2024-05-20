@@ -8,12 +8,18 @@ import { lastValueFrom } from 'rxjs';
 })
 export class CardService {
 
-  private url = 'https://api.pokemontcg.io/v2/cards?page=1&pageSize=10'
+  private url = 'https://api.pokemontcg.io/v2/cards'
+  key = 'cards';
+  constructor(private httpClient: HttpClient) {
 
-  constructor(private httpClient: HttpClient) { }
+   }
 
   async getAll(){
+    const AllCardsInStorage = localStorage.getItem(this.key);
+    if(AllCardsInStorage) return JSON.parse(AllCardsInStorage)
     const cards = await lastValueFrom(this.httpClient.get<{data:Card[]}>(this.url));
+    const jsonData = JSON.stringify(cards.data);
+    localStorage.setItem(this.key, jsonData)
     return cards.data;
   }
 

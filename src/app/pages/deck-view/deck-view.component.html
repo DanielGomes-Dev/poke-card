@@ -23,6 +23,15 @@
                 </div>
             </div>
 
+            } @empty {
+            <div class="w-3/4 m-10 p-10 flex flex-col justify-center items-center deck pb-2">
+                <div class="flex flex-col justify-center items-center">
+                    <h6>Ops... Parece que você ainda não possui nenhum baralho criado</h6>
+                </div>
+                <div [routerLink]="createdeck" class="m-7 p-3 w-1/4 min-w-52 bg-fuchsia-700 flex justify-center items-center rounded-xl cursor-pointer">
+                    <h6 class="text-white text-sm">criar baralho</h6>
+                </div>
+            </div>
             }
         </div>
     </div>

@@ -15,6 +15,7 @@ export class DeckViewComponent implements OnInit {
 
   decks: any = [];
   deckdetails="/deck-details"
+  createdeck="/create-deck";
   constructor(private deckService: DeckService) {
     
   }
