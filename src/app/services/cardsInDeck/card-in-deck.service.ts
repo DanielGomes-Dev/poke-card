@@ -29,9 +29,9 @@ export class CardInDeckService {
     return cards
   }
 
-  async removeCardsInDeck(deckId: string, cardId: any){
-    const deckRef = await this.service.getById(deckId, 'decks');
-    const cards = await this.service.delete(cardId, 'cards', deckRef);
+  async removeCardsInDeck(deckId: string, cardId: string){
+    const deckRef: string = await this.service.getById(deckId, 'decks');
+    const cards = await this.service.delete(deckRef, 'cards', cardId);
     return cards
   }
 } 

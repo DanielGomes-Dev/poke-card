@@ -76,6 +76,8 @@ export class DeckDetailsComponent implements OnInit {
       await this.saveAllCardsAddInDeck()
       await this.removeCardsFromDeck()
       this.showToast('Salvo com sucesso', false);
+      this.getAllCardInDeck(this.deckId)
+
   
     }
     
@@ -94,7 +96,6 @@ export class DeckDetailsComponent implements OnInit {
         for (const card of cardsToSave) {
           await this.cardInDeckService.insertCardsInDeck(this.deckId, card)
         }  
-        this.getAllCardInDeck(this.deckId)
       }else{
         this.cardsToSave.emit([...cardsToSave]);
       }
@@ -102,10 +103,10 @@ export class DeckDetailsComponent implements OnInit {
   }
 
   async removeCardsFromDeck(){
+    const cards = [...this.cardsOutDeck()]
     const cardsToRemove: any = []
-    this.cardsOutDeck().forEach((card:any) => {
-      if(card.cardToRemove){
-        delete card.cardToRemove
+    cards.forEach((card:any) => {
+      if(card.inDeck){
         cardsToRemove.push(card)
       }
     })

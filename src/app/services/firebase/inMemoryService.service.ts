@@ -66,7 +66,7 @@ import { CardInDeck } from "../cardsInDeck/card-in-deck.service";
         if(collectionName == "decks"){
             this.deleteDeck(docId);
         }else{
-           this.deleteCard(deckRef, docId);
+           this.deleteCard(docId, deckRef);
         }
         this.localStorageUpdate();
 
