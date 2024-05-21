@@ -25,7 +25,7 @@ export class CardInDeckService {
 
   async insertCardsInDeck(deckId: string, values: CardInDeck){
     const deckRef = await this.service.getById(deckId, 'decks');
-    const cards = await this.service.insert(values, 'cards', deckRef);
+    const cards = await this.service.insert({...values, inDeck: true}, 'cards', deckRef);
     return cards
   }
 

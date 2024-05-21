@@ -23,7 +23,6 @@ export class DeckDetailsComponent implements OnInit {
   cardsToSave = output<any>();
   toastMessage: string = "";
   errorToast: boolean = false;
-  isEdit = input(true);
 
 
   constructor(private route: ActivatedRoute, private cardInDeckService: CardInDeckService, private cardService: CardService,
@@ -87,7 +86,7 @@ export class DeckDetailsComponent implements OnInit {
     const cardsToSave = []
     for (const card of cards) {
       if(!card.inDeck){
-        cardsToSave.push({...card, inDeck: true});
+        cardsToSave.push(card);
       }
     }
     if(cardsToSave.length){
@@ -122,15 +121,14 @@ export class DeckDetailsComponent implements OnInit {
   addCardsInDeck(card: CardInDeck){
     this.cardsInDeck.update(value => [card, ...value])
     this.removeCardsOutDeck(card.cardId)
-    if(!this.isEdit()) this.emitValue()
+    if(!this.deckId) this.emitValue()
   }
 
   removeCardsInDeck(cardId: string){
     const indexToRemove = this.cardsInDeck().findIndex((cod: any) => cod.cardId == cardId)
     this.cardsInDeck().splice(indexToRemove, 1)
     this.cardsInDeck.update(value => [...value]);
-    if(!this.isEdit()) this.emitValue()
-
+    if(!this.deckId) this.emitValue()
   }
  
 
