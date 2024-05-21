@@ -11,4 +11,5 @@ export class ToastComponent {
 
   error = input.required<boolean>()
   toastMessage = input.required<string>()
+
 }

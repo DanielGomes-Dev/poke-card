@@ -1,22 +1,17 @@
-<!-- @if (cards.length) { @for(cards of cardsFormatedToView; track $index){
-<div class="flex flex-row w-full h-full z-0">
-
-    @for (card of cards; track card.id) {
-    <div class="flex flex-col w-full static hover:z-10">
-        <app-card-view [card]="card"></app-card-view>
-    </div>
-    }
-</div>
-
-
-}@empty { Lista Vazia } }@else {
-<p>Carregando</p>
-} -->
-
 <div class="w-auto flex flex-wrap justify-start min-w-80">
-    @for(card of cards(); track $index){
-    <div (click)="cardClicked(card)" class="flex flex-wrap w-auto h-72 hover:z-10 mb-3 ">
-        <app-card-view class="w-auto min-w-52" [card]="card"></app-card-view>
+    @for(card of cards(); track $index){ @defer (on viewport) {
+
+    <div class="w-full flex felx-col" (click)="cardClicked(card)">
+        <igx-list class="w-full list-sample mb-2">
+            <igx-list-item [isHeader]="true">{{card.supertype}}</igx-list-item>
+            <igx-list-item igxRipple igxRippleTarget=".igx-list__item-content">
+                <igx-avatar igxListThumbnail [src]="'assets/backcard.jpg'" shape="circle"></igx-avatar>
+                <span igxListLineTitle>{{ card.name }}</span>
+                <span igxListLineSubTitle>@for (type of card.types; track $index) { <span>{{type}} </span> }</span>
+
+            </igx-list-item>
+        </igx-list>
     </div>
-    }
+    } @placeholder {
+    <p class="mt-12 text-white">load</p> } }
 </div>

@@ -42,6 +42,9 @@ export class DetailsTypesComponent  {
           }
       }
     })
+    data.sort(function(a: any,b: any) {
+      return a['atribute'] < b['atribute'] ? -1 : a['atribute'] > b['atribute'] ? 1 : 0;
+  });
     return data
   })
 
