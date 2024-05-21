@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DeckService } from '../../services/deck/deck.service';
 import { ListComponent } from '../../components/list/list.component';
-import { CardViewComponent } from "../../components/card-view/card-view.component";
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -9,7 +8,7 @@ import { RouterLink } from '@angular/router';
     standalone: true,
     templateUrl: './deck-view.component.html',
     styleUrl: './deck-view.component.scss',
-    imports: [ListComponent, CardViewComponent, RouterLink]
+    imports: [ListComponent, RouterLink]
 })
 export class DeckViewComponent implements OnInit {
 

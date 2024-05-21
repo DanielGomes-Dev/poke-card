@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NgFor } from '@angular/common';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { LoadingComponent } from '../../components/loading/loading.component';
 import { CardService } from '../../services/card/card.service';
 
@@ -10,9 +9,7 @@ import { CardService } from '../../services/card/card.service';
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss'],
     imports: [
-        NgFor,
         RouterLink,
-        RouterOutlet,
         LoadingComponent
     ]
 })
@@ -22,17 +19,15 @@ export class HomeComponent {
   listRoute = "/list"
   deckview = "/deck-view"
   createdeck = "/create-deck"
-  loading = false;
+  loading = true;
   constructor(private cardService: CardService
   ) { 
     this.loadInformation();
   }
   
   async loadInformation(){
-    this.loading = true;
     await this.cardService.getAll();
     this.loading = false;
-
 
   }
   
