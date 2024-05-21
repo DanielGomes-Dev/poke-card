@@ -38,13 +38,13 @@ export class DeckDetailsComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.deckId = params['deckId'];
       this.getAllCardInDeck(this.deckId);
-      this.showCardsToAdd();
     });
   }
 
   async getAllCardInDeck(deckId:string){
     const response: CardInDeck[] = await this.cardInDeckService.getAllCardInDeck(deckId)    
     this.cardsInDeck.set([...response]);
+    this.showCardsToAdd();
   }
 
   async getAllCardsFromApiAndMap(){
@@ -63,10 +63,13 @@ export class DeckDetailsComponent implements OnInit {
 
   async showCardsToAdd(){
     this.addCard = true;
-    const filteredCards = (await this.getAllCardsFromApiAndMap()).filter(card => {
-      return !this.cardsInDeck().find(cid => cid.cardId == card.cardId)
+    const allCard = await this.getAllCardsFromApiAndMap();
+    console.log(this.cardsInDeck(),'this.cardsInDeck()')
+    console.log(allCard);
+    const filteredCards =  allCard.filter(card => {
+      return !(this.cardsInDeck().find(cid => cid.cardId == card.cardId))
     })
-
+    console.log(filteredCards);
     this.cardsOutDeck.set(filteredCards)
   }
 
@@ -97,7 +100,7 @@ export class DeckDetailsComponent implements OnInit {
   removeCardsOutDeck(cardId: string){
     const cards: any = this.cardsOutDeck() as any
     const indexToRemove = cards.findIndex((cod: any) => cod.cardId == cardId)
-    const newArray = this.cardsOutDeck().splice(indexToRemove, 1)
+    this.cardsOutDeck().splice(indexToRemove, 1)
   }
 
   showToast(toastMessage: string, errorToast:boolean){
@@ -111,11 +114,15 @@ export class DeckDetailsComponent implements OnInit {
 
   async save(){
     const verified = this.cardsInDeckVerify();
-    if(verified.error) return this.showToast(verified.error, true);
-    await this.saveAllCardsAddInDeck()
-    await this.removeCardsFromDeck()
-    this.showToast('Salvo com sucesso', false);
-
+    if(verified.error) {
+      return this.showToast(verified.error, true)
+    }else{
+      await this.saveAllCardsAddInDeck()
+      await this.removeCardsFromDeck()
+      this.showToast('Salvo com sucesso', false);
+  
+    }
+    
   }
 
 
