@@ -23,7 +23,6 @@ import { IgxAvatarModule, IgxButtonGroupModule, IgxFilterModule, IgxIconModule, 
 export class ListComponent   {
   cards = input.required< CardInDeck[]>();
   clickedCard = output<CardInDeck>();
-
   cardClicked(card: CardInDeck){
     this.clickedCard.emit(card);
   }

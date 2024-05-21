@@ -13,7 +13,7 @@ export class DetailsTypesComponent  {
   public chartType = 'Column';
 
   atribute = input.required<string>();
-
+  message = input.required<string>()
   cards = input.required<CardInDeck[]>();
   cardData = computed(()=> {
     const data:any = []
