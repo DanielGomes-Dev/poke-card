@@ -21,7 +21,7 @@ PokeCard é um projeto pensado pela UDS Tecnologia como parte de seu processo se
 ## Instalação
 
 - npm i
-- npm run start:dev
+- npm run start:prod
 
 ## Funcionalidades
 

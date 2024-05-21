@@ -41,7 +41,6 @@ export class CreateDeckComponent {
   }
 
   async cardsToSaveReturned(response:any){
-    console.log(response);
     this.cardsError = response.error
     this.cards.set([...response.cards]);
   }
