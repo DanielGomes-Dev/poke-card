@@ -1,4 +1,7 @@
 <div class="w-full h-full flex flex-col justify-center items-center mt-7">
+    @defer (when toast()) { @if (toast()) {
+    <app-toast [toastMessage]="toastMessage" [error]="error"></app-toast>
+    } }
     <div class="w-full justify-center max-w-xs">
         <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <div class="mb-4">
@@ -15,6 +18,6 @@
         </form>
     </div>
     <div class="w-4/5">
-        <app-deck-details (cardsToSave)="buttonClicked($event)"></app-deck-details>
+        <app-deck-details [isEdit]="false" (cardsToSave)="cardsToSaveReturned($event)"></app-deck-details>
     </div>
 </div>

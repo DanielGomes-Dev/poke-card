@@ -19,17 +19,15 @@ export class DeckDetailsComponent implements OnInit {
   toast = false;
   cardsInDeck = signal<CardInDeck[]>([]);
   cardsOutDeck = signal<CardInDeck[]>([])
-  deckDetails = false;
-  addCard = false;
   deckId: string = ""
-  cardsToSave = output<any[]>();
+  cardsToSave = output<any>();
   toastMessage: string = "";
   errorToast: boolean = false;
+  isEdit = input(true);
 
 
   constructor(private route: ActivatedRoute, private cardInDeckService: CardInDeckService, private cardService: CardService,
   ) {
-    
   }
 
 
@@ -42,8 +40,10 @@ export class DeckDetailsComponent implements OnInit {
   }
 
   async getAllCardInDeck(deckId:string){
-    const response: CardInDeck[] = await this.cardInDeckService.getAllCardInDeck(deckId)    
-    this.cardsInDeck.set([...response]);
+    if(deckId){
+      const response: CardInDeck[] = await this.cardInDeckService.getAllCardInDeck(deckId)    
+      this.cardsInDeck.set([...response]);
+    }
     this.showCardsToAdd();
   }
 
@@ -62,54 +62,11 @@ export class DeckDetailsComponent implements OnInit {
   }
 
   async showCardsToAdd(){
-    this.addCard = true;
     const allCard = await this.getAllCardsFromApiAndMap();
-    console.log(this.cardsInDeck(),'this.cardsInDeck()')
-    console.log(allCard);
     const filteredCards =  allCard.filter(card => {
       return !(this.cardsInDeck().find(cid => cid.cardId == card.cardId))
     })
-    console.log(filteredCards);
     this.cardsOutDeck.set(filteredCards)
-  }
-
- showDeckDetails(){
-  this.deckDetails = true
- }
-
-  addCardsInDeck(card: CardInDeck){
-    if(!this.addCard) return
-    this.cardsInDeck.update(value => [card, ...value])
-    this.removeCardsOutDeck(card.cardId)
-    
-  }
-
-  removeCardsInDeck(cardId: string){
-    const indexToRemove = this.cardsInDeck().findIndex((cod: any) => cod.cardId == cardId)
-    this.cardsInDeck().splice(indexToRemove, 1)
-    this.cardsInDeck.update(value => [...value]);
-  }
- 
-
-  addCardsOutDeck(card: CardInDeck){
-    if(!this.addCard) return
-    this.cardsOutDeck.update(value => [card, ...value]);
-    this.removeCardsInDeck(card.cardId);
-  }
-
-  removeCardsOutDeck(cardId: string){
-    const cards: any = this.cardsOutDeck() as any
-    const indexToRemove = cards.findIndex((cod: any) => cod.cardId == cardId)
-    this.cardsOutDeck().splice(indexToRemove, 1)
-  }
-
-  showToast(toastMessage: string, errorToast:boolean){
-    this.toastMessage = toastMessage
-    this.errorToast = errorToast
-    this.toast = true;
-    setTimeout(()=>{
-      this.toast = false;
-    },2000)
   }
 
   async save(){
@@ -124,7 +81,6 @@ export class DeckDetailsComponent implements OnInit {
     }
     
   }
-
 
   async saveAllCardsAddInDeck(){
     const cards = [...this.cardsInDeck()]
@@ -157,6 +113,45 @@ export class DeckDetailsComponent implements OnInit {
     for (const card of cardsToRemove) {
       await this.cardInDeckService.removeCardsInDeck(this.deckId, card.id);
     }
+  }
+
+  emitValue(){
+    this.cardsToSave.emit({cards: this.cardsInDeck(), error: this.cardsInDeckVerify()})
+  }
+
+  addCardsInDeck(card: CardInDeck){
+    this.cardsInDeck.update(value => [card, ...value])
+    this.removeCardsOutDeck(card.cardId)
+    if(!this.isEdit()) this.emitValue()
+  }
+
+  removeCardsInDeck(cardId: string){
+    const indexToRemove = this.cardsInDeck().findIndex((cod: any) => cod.cardId == cardId)
+    this.cardsInDeck().splice(indexToRemove, 1)
+    this.cardsInDeck.update(value => [...value]);
+    if(!this.isEdit()) this.emitValue()
+
+  }
+ 
+
+  addCardsOutDeck(card: CardInDeck){
+    this.cardsOutDeck.update(value => [card, ...value]);
+    this.removeCardsInDeck(card.cardId);
+  }
+
+  removeCardsOutDeck(cardId: string){
+    const cards: any = this.cardsOutDeck() as any
+    const indexToRemove = cards.findIndex((cod: any) => cod.cardId == cardId)
+    this.cardsOutDeck().splice(indexToRemove, 1)
+  }
+
+  showToast(toastMessage: string, errorToast:boolean){
+    this.toastMessage = toastMessage
+    this.errorToast = errorToast
+    this.toast = true;
+    setTimeout(()=>{
+      this.toast = false;
+    },2000)
   }
 
 

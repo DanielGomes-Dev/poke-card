@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { createDeck, Deck, DeckService } from '../services/deck/deck.service';
 import { NgFor } from '@angular/common';
-import { CardInDeckService } from '../services/cardsInDeck/card-in-deck.service';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { ListComponent } from '../components/list/list.component';
-import { CardService } from '../services/card/card.service';
-import { LoadingComponent } from "../components/loading/loading.component";
+import { LoadingComponent } from '../../components/loading/loading.component';
+import { CardService } from '../../services/card/card.service';
 
 @Component({
     selector: 'app-home',

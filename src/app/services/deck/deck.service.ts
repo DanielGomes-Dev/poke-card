@@ -25,7 +25,7 @@ export class DeckService {
   }
 
   createDeck(values: createDeck){
-    return this.service.insert(values, 'decks');
+    return this.service.insert<number>(values, 'decks');
   }
 
   updateDeck(values: any, docId: string){

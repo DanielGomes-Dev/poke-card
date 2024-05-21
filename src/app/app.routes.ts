@@ -1,8 +1,8 @@
-import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { DeckViewComponent } from './pages/deck-view/deck-view.component';
-import { CreateDeckComponent } from './pages/create-deck/create-deck.component';
-import { DeckDetailsComponent } from './pages/deck-details/deck-details.component';
+import { Routes } from "@angular/router";
+import { HomeComponent } from "./pages/home/home.component";
+import { DeckDetailsComponent } from "./pages/deck-details/deck-details.component";
+import { CreateDeckComponent } from "./pages/create-deck/create-deck.component";
+import { DeckViewComponent } from "./pages/deck-view/deck-view.component";
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
