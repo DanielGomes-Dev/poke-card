@@ -23,7 +23,6 @@ import { CardInDeck } from "../cardsInDeck/card-in-deck.service";
 
     getFromLocalStorage(){
         const jsonData = localStorage.getItem(this.key);
-        console.log(jsonData);
         return jsonData ? JSON.parse(jsonData) : null;
     }
     
@@ -44,13 +43,14 @@ import { CardInDeck } from "../cardsInDeck/card-in-deck.service";
   }
 
     async insert<T>(values: any, collectionName: string, docRef?: any):Promise<T>{
+        let id;
         if(collectionName == 'decks'){
-            this.insertDeck({...values});
+            id = this.insertDeck({...values});
         }else{
-            this.insertCard({...values}, docRef)
+            id = this.insertCard({...values}, docRef)
         }
         this.localStorageUpdate();
-        return true as any;
+        return id as any;
     }
     
     async update<T>(docId: string, updateData: any, collectionName: string):Promise<T>{
@@ -85,14 +85,19 @@ import { CardInDeck } from "../cardsInDeck/card-in-deck.service";
     }
 
     insertDeck(value: any){
-        this.db.push({...value, id: new Date().getTime(), cards: []});
+        const id = new Date().getTime()
+        this.db.push({...value, id, cards: []});
+        return id
     }
 
     insertCard(value: any, deckId: any){
+        const id = new Date().getTime()
+
         const indexDeck = this.db.findIndex(d => d.id == deckId);
         this.db[indexDeck].cards.push(
-            {...value, id: new Date().getTime()}
+            {...value, id}
         );
+        return id
     }
 
     updateDeck(value: any, deckId: any){
