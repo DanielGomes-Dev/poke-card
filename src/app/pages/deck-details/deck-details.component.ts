@@ -1,4 +1,4 @@
-import { Component, OnInit, output } from '@angular/core';
+import { Component, computed, input, OnInit, output, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CardInDeck, CardInDeckService } from '../../services/cardsInDeck/card-in-deck.service';
 import { ListComponent } from '../../components/list/list.component';
@@ -17,8 +17,8 @@ import { DetailsTypesComponent } from '../../components/details-types/details-ty
 })
 export class DeckDetailsComponent implements OnInit {
   toast = false;
-  cardsInDeck: CardInDeck[] = []
-  cardsOutDeck: CardInDeck[] = []
+  cardsInDeck = signal<CardInDeck[]>([]);
+  cardsOutDeck = signal<CardInDeck[]>([])
   deckDetails = false;
   addCard = false;
   deckId: string = ""
@@ -37,14 +37,14 @@ export class DeckDetailsComponent implements OnInit {
   async ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.deckId = params['deckId'];
-      this.getAllCardInDeck(this.deckId)
+      this.getAllCardInDeck(this.deckId);
+      this.showCardsToAdd();
     });
   }
 
   async getAllCardInDeck(deckId:string){
-    const response = await this.cardInDeckService.getAllCardInDeck(deckId)    
-    this.cardsInDeck = [...response];
-    console.log(this.cardsInDeck);
+    const response: CardInDeck[] = await this.cardInDeckService.getAllCardInDeck(deckId)    
+    this.cardsInDeck.set([...response]);
   }
 
   async getAllCardsFromApiAndMap(){
@@ -64,10 +64,10 @@ export class DeckDetailsComponent implements OnInit {
   async showCardsToAdd(){
     this.addCard = true;
     const filteredCards = (await this.getAllCardsFromApiAndMap()).filter(card => {
-      return !this.cardsInDeck.find(cid => cid.cardId == card.cardId)
+      return !this.cardsInDeck().find(cid => cid.cardId == card.cardId)
     })
 
-    this.cardsOutDeck = this.cardsOutDeck.concat([...filteredCards]);
+    this.cardsOutDeck.set(filteredCards)
   }
 
  showDeckDetails(){
@@ -76,27 +76,28 @@ export class DeckDetailsComponent implements OnInit {
 
   addCardsInDeck(card: CardInDeck){
     if(!this.addCard) return
-    this.cardsInDeck.unshift(card)
+    this.cardsInDeck.update(value => [card, ...value])
     this.removeCardsOutDeck(card.cardId)
     
   }
 
   removeCardsInDeck(cardId: string){
-    const indexToRemove = this.cardsInDeck.findIndex((cod: any) => cod.cardId == cardId)
-    this.cardsInDeck.splice(indexToRemove, 1)
+    const indexToRemove = this.cardsInDeck().findIndex((cod: any) => cod.cardId == cardId)
+    this.cardsInDeck().splice(indexToRemove, 1)
+    this.cardsInDeck.update(value => [...value]);
   }
  
 
   addCardsOutDeck(card: CardInDeck){
     if(!this.addCard) return
-    this.cardsOutDeck.unshift(card)
+    this.cardsOutDeck.update(value => [card, ...value]);
     this.removeCardsInDeck(card.cardId);
   }
 
   removeCardsOutDeck(cardId: string){
-    const cards: any = this.cardsOutDeck as any
+    const cards: any = this.cardsOutDeck() as any
     const indexToRemove = cards.findIndex((cod: any) => cod.cardId == cardId)
-    this.cardsOutDeck.splice(indexToRemove, 1)
+    const newArray = this.cardsOutDeck().splice(indexToRemove, 1)
   }
 
   showToast(toastMessage: string, errorToast:boolean){
@@ -119,7 +120,7 @@ export class DeckDetailsComponent implements OnInit {
 
 
   async saveAllCardsAddInDeck(){
-    const cards = [...this.cardsInDeck]
+    const cards = [...this.cardsInDeck()]
     const cardsToSave = []
     for (const card of cards) {
       if(!card.inDeck){
@@ -140,7 +141,7 @@ export class DeckDetailsComponent implements OnInit {
 
   async removeCardsFromDeck(){
     const cardsToRemove: any = []
-    this.cardsOutDeck.forEach((card:any) => {
+    this.cardsOutDeck().forEach((card:any) => {
       if(card.cardToRemove){
         delete card.cardToRemove
         cardsToRemove.push(card)
@@ -161,10 +162,10 @@ export class DeckDetailsComponent implements OnInit {
   verifyNamesInDeck(){
     const cards = this.cardsInDeck;
 
-    for (const card of cards) {
+    for (const card of cards()) {
       const name = card.name
       let quantityNames = 0
-      for (const card2 of cards) {
+      for (const card2 of cards()) {
         if(card.name == card2.name){
           quantityNames += 1;
           if(quantityNames > 4){
@@ -178,7 +179,7 @@ export class DeckDetailsComponent implements OnInit {
   }
 
   verifyQuantityCardsInDeck(){
-    const quantity = this.cardsInDeck.length
+    const quantity = this.cardsInDeck().length
     if(quantity < 24 || quantity > 60){
       return false
     }else{

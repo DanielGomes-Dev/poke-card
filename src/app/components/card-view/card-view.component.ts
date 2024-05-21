@@ -9,10 +9,6 @@ import { Component, Input } from '@angular/core';
 })
 export class CardViewComponent {
 
-
   @Input({required: true}) card: any;
-  //  lastName = input.required<any>(this.mockCard);
-  // card = input<any>(this.mockCard);
-
 
 }

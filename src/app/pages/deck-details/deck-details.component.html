@@ -4,59 +4,53 @@
         <app-toast [error]="errorToast" [toastMessage]="toastMessage" class="relative transition-all duration-500"></app-toast>
     </div>
     } }
-    <div>
-        <h4 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl">Cartas no seu Deck</h4>
-
-    </div>
-    <div class="w-10/12">
-        <div>
-            @defer (when cardsInDeck&&cardsInDeck.length) {
-            <app-list [cards]="cardsInDeck" (clickedCard)="addCardsOutDeck($event)"></app-list>
-            }
-        </div>
-    </div>
-
     <div class="flex">
         <div class="mr-10">
-            @if (!addCard) {
-            <button (click)="showCardsToAdd()" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-                        Adicionar ou Remover Cartas
-                    </button> }@else {
+
             <button (click)="save()" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
                         Salvar Baralho
-                    </button> }
+                    </button>
         </div>
-        <div>
-            <button (click)="showDeckDetails()" class="bg-transparent 
-            hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-                Informações do Baralho
-            </button>
+
+
+    </div>
+    <div class="w-10/12 flex  flex-row flex-wrap justify-center">
+        <div class="w-5/12 min-w-96 h-96 m-8 overflow-y-scroll">
+            <div>
+                <h6 class="mb-4 text-nowrap text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl">Cartas no seu Deck</h6>
+            </div>
+            <div>
+                <app-list [cards]="cardsInDeck()" (clickedCard)="addCardsOutDeck($event)"></app-list>
+            </div>
+        </div>
+
+
+        <div class="w-5/12 min-w-96 h-96 m-8 overflow-y-scroll flex-wrap">
+            <div>
+                <h6 class="mb-4 text-nowrap text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl">Cartas disponiveis para adicionar</h6>
+            </div>
+            <div>
+                <app-list [cards]="cardsOutDeck()" (clickedCard)="addCardsInDeck($event)"></app-list>
+            </div>
         </div>
 
     </div>
 
-    @defer (when addCard) { @if (cardsOutDeck) {
-    <div class="mb-9">
-        <h4 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl">Clique nas cartas que deseja adicionar ao seu deck</h4>
-    </div>
-    <div class="w-10/12">
-        <div>
-            @defer (when cardsOutDeck&&cardsOutDeck.length) {
-            <app-list [cards]="cardsOutDeck" (clickedCard)="addCardsInDeck($event)"></app-list>
-            }
+
+    <div class="w-full min-w-96 flex justify-center ">
+        <div class="w-full flex justify-center mt-5">
+            <div class="w-1/3  mt-5">
+                <app-details-types [cards]="cardsInDeck()" [atribute]="'types'"></app-details-types>
+            </div>
+            <div class="w-1/3  mt-5">
+                <app-details-types [cards]="cardsInDeck()" [atribute]="'supertype'"></app-details-types>
+            </div>
+            <div class="w-1/3  mt-5">
+                <app-details-types [cards]="cardsInDeck()" [atribute]="'name'"></app-details-types>
+            </div>
         </div>
+
     </div>
 
-    } } @defer (when deckDetails) {
-    <div class="w-full flex justify-center mt-5">
-        <div class="w-1/3">
-            <app-details-types [cards]="cardsInDeck" [atribute]="'types'"></app-details-types>
-        </div>
-        <div class="w-1/3">
-            <app-details-types [cards]="cardsInDeck" [atribute]="'supertype'"></app-details-types>
-        </div>
-    </div>
-
-    }
 
 </div>
