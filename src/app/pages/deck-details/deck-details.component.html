@@ -20,7 +20,7 @@
             <app-card-view class="w-full h-full" [card]="card"></app-card-view>
         </div>
         }@placeholder {
-        <div class="w-1/5 bg-black">
+        <div class="w-full flex justify-end">
             <p>load</p>
         </div>
         } }
@@ -52,13 +52,13 @@
     <div class="w-full min-w-96 flex justify-center ">
         <div class="w-full flex justify-center mt-5 flex-wrap">
             <div class="w-1/3  mt-5">
-                <app-details-types [cards]="cardsInDeck()" [atribute]="'types'"></app-details-types>
+                <app-details-types [message]="'Tipos de Pokemon'" [cards]="cardsInDeck()" [atribute]="'types'"></app-details-types>
             </div>
             <div class="w-1/3  mt-5">
-                <app-details-types [cards]="cardsInDeck()" [atribute]="'supertype'"></app-details-types>
+                <app-details-types [message]="'Tipos de Card'" [cards]="cardsInDeck()" [atribute]="'supertype'"></app-details-types>
             </div>
             <div class="w-1/3  mt-5">
-                <app-details-types [cards]="cardsInDeck()" [atribute]="'name'"></app-details-types>
+                <app-details-types [message]="'Quantidade de Pokemon por nome'" [cards]="cardsInDeck()" [atribute]="'name'"></app-details-types>
             </div>
         </div>
     </div>
