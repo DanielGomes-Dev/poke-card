@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { CardInDeck } from '../../services/cardsInDeck/card-in-deck.service';
 
 @Component({
   selector: 'app-card-view',
@@ -9,6 +10,6 @@ import { Component, Input } from '@angular/core';
 })
 export class CardViewComponent {
 
-  @Input({required: true}) card: any;
+  card = input.required<CardInDeck>()
 
 }
