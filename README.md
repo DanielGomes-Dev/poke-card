@@ -11,7 +11,6 @@
 - [Funcionalidades](#funcionalidades)
 - [Tecnologias do Projeto](#tecnologias-do-projeto)
 - [Licença](#licença)
-- [Contato](#contato)
 
 ## Descrição
 
