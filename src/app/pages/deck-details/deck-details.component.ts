@@ -64,12 +64,9 @@ export class DeckDetailsComponent implements OnInit {
   async showCardsToAdd(){
     this.addCard = true;
     const allCard = await this.getAllCardsFromApiAndMap();
-    console.log(this.cardsInDeck(),'this.cardsInDeck()')
-    console.log(allCard);
     const filteredCards =  allCard.filter(card => {
       return !(this.cardsInDeck().find(cid => cid.cardId == card.cardId))
     })
-    console.log(filteredCards);
     this.cardsOutDeck.set(filteredCards)
   }
 
